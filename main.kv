@@ -1,0 +1,186 @@
+#:import sm kivy.uix.screenmanager
+ScreenManager:
+    id:manager
+    transition:sm.FadeTransition(duration=.0)
+
+    MDScreen:
+        name:"entrance"
+        FloatLayout:
+            Shops:
+                pos_hint:{'center_x': .25, 'center_y':.65}
+                on_release:
+                    manager.current = 'food'
+                MDIcon:
+                    icon:"food"
+                    halign:"center"
+                    pos_hint:{'center_x':.5, 'center_y': .6}
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                MDLabel:
+                    text:"FOOD"
+                    bold:True
+                    halign: "center"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                    halign:'center'
+            Shops:
+                pos_hint:{'center_x': .75, 'center_y':.65}
+                on_release:
+                    manager.current = 'market'
+                MDIcon:
+                    icon:"shopping"
+                    halign:"center"
+                    pos_hint:{'center_x':.5, 'center_y': .6}
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                MDLabel:
+                    text:"MARKETS"
+                    bold:True
+                    halign:'center'
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                    halign:'center'
+
+            Shops:
+                pos_hint:{'center_x': .5, 'center_y':.35}
+                on_release:
+                    manager.current = 'request'
+                MDIcon:
+                    icon:"phone"
+                    halign:"center"
+                    pos_hint:{'center_x':.5, 'center_y': .6}
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                MDLabel:
+                    text:"REQUEST!"
+                    bold:True
+                    halign:'center'
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                    halign:'center'
+
+    MDScreen:
+        name:'food'
+        on_enter:
+            app.first()
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: dp(5), dp(5)
+            MDToolbar:
+                title: "Food and Drinks"
+                md_bg_color: 83/225, 186/225, 115/225, 1
+                id:tool
+                left_action_items: [["chevron-left", lambda x: print("ok")]]
+            MDBottomNavigation:
+                id:bnav
+                panel_color: 83/225, 186/225, 115/225, 1
+
+                MDBottomNavigationItem:
+                    name: 'home'
+                    text: 'Home'
+                    icon: 'home-outline'
+
+                    ScrollView:
+                        id: scroll
+                        MDGridLayout:
+                            cols: 2
+                            adaptive_height: True
+                            padding: dp(10), dp(4)
+                            spacing: dp(30)
+                            id:front_shop
+
+                MDBottomNavigationItem:
+                    name: 'orders'
+                    text: 'Orders'
+                    icon: 'format-list-bulleted'
+
+                    MDLabel:
+                        text: 'Python'
+                        halign: 'center'
+
+                MDBottomNavigationItem:
+                    name: 'account'
+                    text: 'Account'
+                    icon: 'account-outline'
+
+                    MDLabel:
+                        text: 'JS'
+                        halign: 'center'
+
+    MDScreen:
+        name:'market'
+        FloatLayout:
+            Shops:
+                pos_hint:{"center_x": .5, "center_y":.5}
+                on_release:
+                    app.spin_dialog()
+                MDLabel:
+                    text:"MARKETS"
+                    bold:True
+                    halign:'center'
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                    halign:'center'
+
+    MDScreen:
+        name:'request'
+        FloatLayout:
+            Shops:
+                pos_hint:{"center_x": .5, "center_y":.5}
+                MDLabel:
+                    text:"REQUEST"
+                    bold:True
+                    halign:'center'
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                    halign:'center'
+
+<Shops@MDCard>:
+    orientation: "vertical"
+    md_bg_color: 83/225, 186/225, 115/225, 1
+    padding: "10dp"
+    #spacing: "5dp"
+    border_radius: 20
+    border_color_a: 0
+    radius: [15]
+    size_hint: None, None
+    size: app.size_x/2.5, app.size_y/4.5
+    focus_behavior: False
+    ripple_behavior: True
+    elevation: 0.1
+
+<Labels>:
+    text: "Title"
+    theme_text_color: "Custom"
+    #text_color: 230/255, 150/255, 11/255
+    size_hint_y: None
+    height: self.texture_size[1]
+    font_style:"Body1"
+    bold: True
+
+<Foods>:
+    orientation: "vertical"
+    md_bg_color: 83/225, 186/225, 115/225, 1
+    padding: "10dp"
+    #spacing: "5dp"
+    border_radius: 20
+    border_color_a: 0
+    radius: [15]
+    size_hint: None, None
+    size: app.size_x/2.5, app.size_y/4.5
+    focus_behavior: False
+    ripple_behavior: True
+    elevation: 0.1
+
+<Spin>:
+    adaptive_height: True
+    spacing: dp(5)
+    MDSpinner:
+        size_hint: None, None
+        size: dp(25), dp(25)
+        pos_hint: {'center_x': .5, 'center_y': 1}
+        active: True
+    MDLabel:
+        text:'Loading...'
+        bold:True
+        pos_hint: {'center_x': .5, 'center_y': 1}
