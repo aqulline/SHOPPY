@@ -145,9 +145,10 @@ ScreenManager:
 
     MDScreen:
         name:'description'
+        md_bg_color: 250/255, 255/255, 255/255, 1
         MDBoxLayout:
+            orientation:'vertical'
             MDCard:
-                orientation: "vertical"
                 md_bg_color: 1, 1, 1, 1
                 padding: "10dp"
                 #spacing: "5dp"
@@ -155,10 +156,92 @@ ScreenManager:
                 border_color_a: 0
                 radius: [15]
                 size_hint: None, None
-                size: app.size_x/2.5, app.size_y/4.5
+                size: app.size_x/1, app.size_y/9
+                pos_hint:{'center_x':.5, 'center_y':.85}
                 focus_behavior: False
                 ripple_behavior: True
                 elevation: 0.1
+                MDIconButton:
+                    icon:'chevron-left'
+                    theme_text_color: "Custom"
+                    text_color: 78/255, 82/255, 84/255, 1
+                MDLabel:
+                    text:'company name'
+                    halign:'center'
+                    font_name:'images/fonts/Gill Sans Medium.otf'
+                    theme_text_color: "Custom"
+                    text_color: 78/255, 82/255, 84/255, 1
+                    font_style:"Subtitle1"
+            MDCarousel:
+                AsyncImage:
+                    source:'images/test.png'
+                AsyncImage:
+                    source:'images/test.png'
+                AsyncImage:
+                    source:'images/test.png'
+                AsyncImage:
+                    source:'images/test.png'
+            ScrollView:
+                id: scroll
+                MDBoxLayout:
+                    orientation:'vertical'
+                    adaptive_height: True
+                    padding: dp(10), dp(4)
+                    spacing: dp(30)
+                    Labels:
+                        text:'Lacasa De Papel'
+                        font_style:"H6"
+                        font_name:'images/fonts/Gill Sans.otf'
+                        theme_text_color: "Custom"
+                        text_color: 83 / 255, 186 / 255, 155 / 255, 1
+                    MDLabel:
+                        text:'DESCRIPTION'
+                        height: self.texture_size[1]
+                        font_style:"Subtitle1"
+                        font_name:'images/fonts/Gill Sans.otf'
+                        theme_text_color: "Custom"
+                        text_color: 78/255, 82/255, 84/255, 1
+                    MDLabel:
+                        text:'This is  a greate movie i recommend that you should watch for it capture every reality about a heist a big heist'
+                        height: self.texture_size[1]
+                        font_style:"Subtitle2"
+                        font_name:'images/fonts/Gill Sans.otf'
+                        theme_text_color: "Custom"
+                        text_color: 78/255, 82/255, 84/255, 1
+                    Shops:
+                        pos_hint:{"center_x":.5, "center_y":.5}
+                        size: app.size_x/2.5, app.size_y/7
+                        focus_behavior: False
+                        ripple_behavior: False
+                        orientation:'vertical'
+                        spacing: dp(10)
+                        Labels:
+                            text:'Quantity'
+                            halign:'center'
+                        MDBoxLayout:
+                            spacing:dp(10)
+                            MDIconButton:
+                                icon:'plus'
+                                theme_text_color: "Custom"
+                                text_color: 78/255, 82/255, 84/255, 1
+                            MDLabel:
+                                text:'0'
+                                halign:"center"
+                                theme_text_color: "Custom"
+                                text_color: 78/255, 82/255, 84/255, 1
+                                font_name:'images/fonts/Gill Sans.otf'
+                                theme_text_color: "Custom"
+                                text_color: 78/255, 82/255, 84/255, 1
+                            MDIconButton:
+                                icon:'minus'
+                                theme_text_color: "Custom"
+                                text_color: 78/255, 82/255, 84/255, 1
+
+
+
+
+
+
 
 
 <Shops@MDCard>:
@@ -179,7 +262,7 @@ ScreenManager:
     text: "Title"
     font_name:'images/fonts/Gill Sans.otf'
     theme_text_color: "Custom"
-    text_color:78/255, 82/255, 84/255, 1
+    text_color: 78/255, 82/255, 84/255, 1
     size_hint_y: None
     height: self.texture_size[1]
     font_style:"Body1"
