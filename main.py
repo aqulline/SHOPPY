@@ -9,7 +9,7 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
 from kivy import utils
 from kivymd.uix.dialog import MDDialog
-from kivymd.uix.label import MDLabel, MDIcon
+from kivymd.uix.label import MDLabel
 
 if utils.platform != 'android':
     Window.size = (360, 640)
