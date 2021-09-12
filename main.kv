@@ -15,13 +15,13 @@ ScreenManager:
                     halign:"center"
                     pos_hint:{'center_x':.5, 'center_y': .6}
                     theme_text_color: "Custom"
-                    text_color: 1, 1, 1, 1
+                    text_color: 83/225, 186/225, 115/225, 1
                 MDLabel:
                     text:"FOOD"
                     bold:True
                     halign: "center"
                     theme_text_color: "Custom"
-                    text_color: 1, 1, 1, 1
+                    text_color: 83/225, 186/225, 115/225, 1
                     halign:'center'
             Shops:
                 pos_hint:{'center_x': .75, 'center_y':.65}
@@ -32,13 +32,13 @@ ScreenManager:
                     halign:"center"
                     pos_hint:{'center_x':.5, 'center_y': .6}
                     theme_text_color: "Custom"
-                    text_color: 1, 1, 1, 1
+                    text_color: 83/225, 186/225, 115/225, 1
                 MDLabel:
                     text:"MARKETS"
                     bold:True
                     halign:'center'
                     theme_text_color: "Custom"
-                    text_color: 1, 1, 1, 1
+                    text_color: 83/225, 186/225, 115/225, 1
                     halign:'center'
 
             Shops:
@@ -50,13 +50,13 @@ ScreenManager:
                     halign:"center"
                     pos_hint:{'center_x':.5, 'center_y': .6}
                     theme_text_color: "Custom"
-                    text_color: 1, 1, 1, 1
+                    text_color: 83/225, 186/225, 115/225, 1
                 MDLabel:
                     text:"REQUEST!"
                     bold:True
                     halign:'center'
                     theme_text_color: "Custom"
-                    text_color: 1, 1, 1, 1
+                    text_color: 83/225, 186/225, 115/225, 1
                     halign:'center'
 
     MDScreen:
@@ -68,12 +68,12 @@ ScreenManager:
             padding: dp(5), dp(5)
             MDToolbar:
                 title: "Food and Drinks"
-                md_bg_color: 83/225, 186/225, 115/225, 1
+                elevation: 10
                 id:tool
                 left_action_items: [["chevron-left", lambda x: print("ok")]]
             MDBottomNavigation:
                 id:bnav
-                panel_color: 83/225, 186/225, 115/225, 1
+                panel_color: 1, 1, 1, 1
 
                 MDBottomNavigationItem:
                     name: 'home'
@@ -135,9 +135,27 @@ ScreenManager:
                     text_color: 1, 1, 1, 1
                     halign:'center'
 
+    MDScreen:
+        name:'description'
+        MDBoxLayout:
+            MDCard:
+                orientation: "vertical"
+                md_bg_color: 1, 1, 1, 1
+                padding: "10dp"
+                #spacing: "5dp"
+                border_radius: 20
+                border_color_a: 0
+                radius: [15]
+                size_hint: None, None
+                size: app.size_x/2.5, app.size_y/4.5
+                focus_behavior: False
+                ripple_behavior: True
+                elevation: 0.1
+
+
 <Shops@MDCard>:
     orientation: "vertical"
-    md_bg_color: 83/225, 186/225, 115/225, 1
+    md_bg_color: 1, 1, 1, 1
     padding: "10dp"
     #spacing: "5dp"
     border_radius: 20
@@ -160,14 +178,14 @@ ScreenManager:
 
 <Foods>:
     orientation: "vertical"
-    md_bg_color: 83/225, 186/225, 115/225, 1
+    md_bg_color: 1, 1, 1, 1
     padding: "10dp"
     #spacing: "5dp"
     border_radius: 20
     border_color_a: 0
     radius: [15]
     size_hint: None, None
-    size: app.size_x/2.5, app.size_y/4.5
+    size: app.size_x/2.5, app.size_y/3
     focus_behavior: False
     ripple_behavior: True
     elevation: 0.1

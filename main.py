@@ -2,12 +2,18 @@ import time
 from kivy.clock import Clock
 
 from kivy.properties import NumericProperty, StringProperty
+from kivy.uix.image import AsyncImage
 from kivymd.app import MDApp
 from kivy.core.window import Window
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
+from kivy import utils
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.label import MDLabel, MDIcon
+
+if utils.platform != 'android':
+
+    Window.size = (360, 640)
 
 
 class Spin(MDBoxLayout):
@@ -58,11 +64,11 @@ class MainApp(MDApp):
 
     def backgrounds_colors(self):
         toolbar = self.root.ids.tool
-        toolbar.md_bg_color = 83/225, 186/225, 115/225, 1
-        toolbar.specific_text_color = 1, 1, 1, 1
+        toolbar.md_bg_color = 1, 1, 1, 1
+        toolbar.specific_text_color = 83/225, 186/225, 115/225, 1
 
         nav = self.root.ids.bnav
-        nav.text_color_active = 1, 1, 1, 1
+        nav.text_color_active = 83/225, 186/225, 115/225, 1
 
     def spin_dialog(self):
         if not self.dialog_spin:
@@ -87,10 +93,9 @@ class MainApp(MDApp):
             self.product_name = f'product{i}'
             self.product_price = f'price{i}/tsh'
             self.company_name = i * 'aa'
-            card.add_widget(MDIcon(icon='food', halign='center'))
+            card.add_widget(AsyncImage(source='images/test.png'))
             card.add_widget(Labels(text=self.product_name, halign='center'))
             card.add_widget(Labels(text=self.product_price, halign='center'))
-            card.add_widget(Labels(text=self.company_name, halign='center'))
             scroll.add_widget(card)
             # time.sleep(3)
         self.spin_dismiss()
@@ -99,7 +104,6 @@ class MainApp(MDApp):
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "LightGreen"
         self.theme_cls.accent = "Brown"
-        #Window.size = (360, 640)
         self.size_x, self.size_y = Window.size
         self.title = "SHOPPY"
 
