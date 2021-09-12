@@ -46,6 +46,7 @@ class MainApp(MDApp):
     # product
     product_name = StringProperty('')
     product_price = StringProperty('')
+    Product_title = StringProperty('')
     product_description = StringProperty('')
     product_image = StringProperty('')
     product_images = []
