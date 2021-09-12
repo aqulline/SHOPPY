@@ -4,6 +4,7 @@ ScreenManager:
     transition:sm.FadeTransition(duration=.0)
 
     MDScreen:
+        md_bg_color: 245/255, 245/255, 245/255, 1
         name:"entrance"
         FloatLayout:
             Shops:
@@ -16,10 +17,12 @@ ScreenManager:
                     pos_hint:{'center_x':.5, 'center_y': .6}
                     theme_text_color: "Custom"
                     text_color: 83/225, 186/225, 115/225, 1
+
                 MDLabel:
                     text:"FOOD"
                     bold:True
                     halign: "center"
+                    font_name:'images/fonts/Gill Sans Bold.otf'
                     theme_text_color: "Custom"
                     text_color: 83/225, 186/225, 115/225, 1
                     halign:'center'
@@ -37,12 +40,16 @@ ScreenManager:
                     text:"MARKETS"
                     bold:True
                     halign:'center'
+                    font_name:'images/fonts/Gill Sans Bold.otf'
                     theme_text_color: "Custom"
                     text_color: 83/225, 186/225, 115/225, 1
                     halign:'center'
 
             Shops:
-                pos_hint:{'center_x': .5, 'center_y':.35}
+                pos_hint:{'center_x': .5, 'center_y':.3}
+                size_hint: None, None
+                size: app.size_x/2, app.size_y/8.5
+                orientation:'vertical'
                 on_release:
                     manager.current = 'request'
                 MDIcon:
@@ -55,6 +62,7 @@ ScreenManager:
                     text:"REQUEST!"
                     bold:True
                     halign:'center'
+                    font_name:'images/fonts/Gill Sans Bold.otf'
                     theme_text_color: "Custom"
                     text_color: 83/225, 186/225, 115/225, 1
                     halign:'center'
@@ -169,8 +177,9 @@ ScreenManager:
 
 <Labels>:
     text: "Title"
+    font_name:'images/fonts/Gill Sans.otf'
     theme_text_color: "Custom"
-    #text_color: 230/255, 150/255, 11/255
+    text_color:78/255, 82/255, 84/255, 1
     size_hint_y: None
     height: self.texture_size[1]
     font_style:"Body1"
@@ -198,7 +207,11 @@ ScreenManager:
         size: dp(25), dp(25)
         pos_hint: {'center_x': .5, 'center_y': 1}
         active: True
+        color: 83/225, 186/225, 115/225, 1
     MDLabel:
         text:'Loading...'
         bold:True
+        font_name:'images/fonts/Gill Sans.otf'
+        theme_text_color: "Custom"
+        text_color:78/255, 82/255, 84/255, 1
         pos_hint: {'center_x': .5, 'center_y': 1}
