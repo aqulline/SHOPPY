@@ -83,7 +83,6 @@ class MainApp(MDApp):
         self.dialog_spin.dismiss()
 
     ''''
-    
                 DOWN HERE STAYS ONLY TESTING FUNCTIONS
     
     '''
