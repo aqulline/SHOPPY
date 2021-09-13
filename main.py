@@ -106,7 +106,6 @@ class MainApp(MDApp):
             card.add_widget(Labels(text=self.product_name, halign='center'))
             card.add_widget(Labels(text=self.product_price, halign='center'))
             scroll.add_widget(card)
-            # time.sleep(3)
         self.spin_dismiss()
 
     def build(self):
