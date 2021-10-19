@@ -6,12 +6,16 @@ from kivy.uix.image import AsyncImage
 from kivymd.app import MDApp
 from kivy.core.window import Window
 from kivymd.toast import toast
-from kivymd.uix.bottomsheet import MDGridBottomSheet, MDListBottomSheet
+from kivymd.uix.bottomsheet import MDListBottomSheet
+from kivy.base import EventLoop
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
 from kivy import utils
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.label import MDLabel
+
+Window.keyboard_anim_args = {"d": .2, "t": "linear"}
+Window.softinput_mode = "below_target"
 
 if utils.platform != 'android':
     Window.size = (360, 640)
@@ -66,6 +70,7 @@ class MainApp(MDApp):
 
     def on_start(self):
         self.backgrounds_colors()
+        self.keyboard_hooker()
 
     def backgrounds_colors(self):
         toolbar = self.root.ids.tool
@@ -128,6 +133,20 @@ class MainApp(MDApp):
                 icon='food'
             )
         bottom_sheet_menu.open()
+
+    cnt = 1
+
+    def hook_keyboard(self, window, key, *largs):
+        if key == 27 :
+            print("nice")
+            return True
+        elif key == 27 and self.cnt < 1:
+            # Window.on_close()
+            print("ok")
+            return True
+
+    def keyboard_hooker(self):
+        EventLoop.window.bind(on_keyboard=self.hook_keyboard)
 
     ''''
                 DOWN HERE STAYS ONLY TESTING FUNCTIONS
