@@ -219,30 +219,37 @@ ScreenManager:
                             text:'Quantity'
                             halign:'center'
                         MDBoxLayout:
-                            spacing:dp(10)
+                            spacing:dp(15)
                             MDIconButton:
                                 icon:'plus'
                                 theme_text_color: "Custom"
                                 text_color: 78/255, 82/255, 84/255, 1
+                                on_release:
+                                    app.increment("plus")
                             MDLabel:
-                                text:'0'
+                                text:app.quantity
                                 halign:"center"
                                 theme_text_color: "Custom"
                                 text_color: 78/255, 82/255, 84/255, 1
                                 font_name:'images/fonts/Gill Sans.otf'
                                 theme_text_color: "Custom"
+                                height: self.texture_size[1]
+                                width: self.texture_size[1]
                                 text_color: 78/255, 82/255, 84/255, 1
                             MDIconButton:
                                 icon:'minus'
                                 theme_text_color: "Custom"
                                 text_color: 78/255, 82/255, 84/255, 1
+                                on_release:
+                                    app.increment("minus")
 
-
-
-
-
-
-
+                    MDDropDownItem:
+                        id:drop_item_one
+                        md_bg_color:self.theme_cls.primary_color
+                        pos_hint: {'center_x': .5, 'center_y': .19}
+                        text: app.location
+                        on_release:
+                            app.location_sheet()
 
 <Shops@MDCard>:
     orientation: "vertical"

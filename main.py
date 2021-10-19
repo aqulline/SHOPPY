@@ -5,6 +5,8 @@ from kivy.properties import NumericProperty, StringProperty
 from kivy.uix.image import AsyncImage
 from kivymd.app import MDApp
 from kivy.core.window import Window
+from kivymd.toast import toast
+from kivymd.uix.bottomsheet import MDGridBottomSheet, MDListBottomSheet
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
 from kivy import utils
@@ -36,6 +38,8 @@ class MainApp(MDApp):
     dialog_spin = None
 
     # business
+    quantity = StringProperty('0')
+    location = StringProperty("Choose location")
     company_name = StringProperty('')
     company_bio = StringProperty('')
     company_followers = StringProperty('')
@@ -47,6 +51,7 @@ class MainApp(MDApp):
     product_name = StringProperty('')
     product_price = StringProperty('')
     Product_title = StringProperty('')
+    product_stock = StringProperty('')
     product_description = StringProperty('')
     product_image = StringProperty('')
     product_images = []
@@ -81,6 +86,48 @@ class MainApp(MDApp):
 
     def spin_dismiss(self):
         self.dialog_spin.dismiss()
+
+    def increment(self, what):
+        if what == "minus":
+            if int(self.quantity) >= 1:
+                self.quantity = str(int(self.quantity) - 1)
+        elif what == "plus":
+            self.quantity = str(int(self.quantity) + 1)
+
+    def callback_for_menu_items(self, *args):
+        toast(args[0])
+        self.location = args[0]
+
+    def location_sheet(self):
+        bottom_sheet_menu = MDListBottomSheet()
+        vimbweta = [
+            "vimbweta vya uwanjani",
+            "vimbweta vya stationary",
+            "vimbweta vya girls hostel",
+            "vimbweta vya boys hostel",
+            "vimbweta nyuma ya ndege",
+            "vimbweta vya block 16",
+            "vimbweta vya adminstration",
+            "class one",
+            "class two",
+            "class three",
+            "Aviation classes"
+        ]
+        for i in vimbweta:
+            bottom_sheet_menu.add_item(
+                i,
+                lambda x, y=i: self.callback_for_menu_items(y),
+                icon="food"
+            )
+        for i in range(1, 22):
+            bottom_sheet_menu.add_item(
+                f"Block {i}",
+                lambda x, y=i: self.callback_for_menu_items(
+                    f"Block {y}"
+                ),
+                icon='food'
+            )
+        bottom_sheet_menu.open()
 
     ''''
                 DOWN HERE STAYS ONLY TESTING FUNCTIONS
