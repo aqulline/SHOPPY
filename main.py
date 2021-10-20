@@ -37,6 +37,9 @@ class MainApp(MDApp):
     # APP
     size_x = NumericProperty(0)
     size_y = NumericProperty(0)
+    screens = ['entrance']
+    screens_size = NumericProperty(len(screens) - 1)
+    current = StringProperty(screens[len(screens)-1])
 
     # dialog's
     dialog_spin = None
@@ -134,16 +137,28 @@ class MainApp(MDApp):
             )
         bottom_sheet_menu.open()
 
-    cnt = 1
-
     def hook_keyboard(self, window, key, *largs):
-        if key == 27 :
-            print("nice")
+        print(self.screens_size)
+        if key == 27 and self.screens_size > 0:
+            print(f"your were in {self.current}")
+            last_screens = self.current
+            self.screens.remove(last_screens)
+            self.screens_size = len(self.screens) - 1
+            self.current = self.screens[len(self.screens) - 1]
+            self.screen_capture(self.current)
             return True
-        elif key == 27 and self.cnt < 1:
-            # Window.on_close()
-            print("ok")
+        elif key == 27 and self.screens_size == 0:
+            toast('fucker')
             return True
+
+    def screen_capture(self, screen):
+        sm = self.root
+        sm.current = screen
+        self.screens.append(screen)
+        self.screens_size = len(self.screens) - 1
+        self.current = self.screens[len(self.screens) - 1]
+        print(f'size {self.screens_size}')
+        print(f'current screen {screen}')
 
     def keyboard_hooker(self):
         EventLoop.window.bind(on_keyboard=self.hook_keyboard)
@@ -154,8 +169,7 @@ class MainApp(MDApp):
     '''
 
     def desc(self):
-        rt = self.root
-        rt.current = 'description'
+        self.screen_capture('description')
 
     def first(self):
         self.spin_dialog()

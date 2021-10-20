@@ -10,7 +10,7 @@ ScreenManager:
             Shops:
                 pos_hint:{'center_x': .25, 'center_y':.65}
                 on_release:
-                    manager.current = 'food'
+                    app.screen_capture('food')
                 MDIcon:
                     icon:"food"
                     halign:"center"
@@ -29,7 +29,7 @@ ScreenManager:
             Shops:
                 pos_hint:{'center_x': .75, 'center_y':.65}
                 on_release:
-                    manager.current = 'market'
+                    app.screen_capture('market')
                 MDIcon:
                     icon:"shopping"
                     halign:"center"
