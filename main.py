@@ -143,6 +143,7 @@ class MainApp(MDApp):
             print(f"your were in {self.current}")
             last_screens = self.current
             self.screens.remove(last_screens)
+            print(self.screens)
             self.screens_size = len(self.screens) - 1
             self.current = self.screens[len(self.screens) - 1]
             self.screen_capture(self.current)
@@ -154,11 +155,24 @@ class MainApp(MDApp):
     def screen_capture(self, screen):
         sm = self.root
         sm.current = screen
-        self.screens.append(screen)
+        if screen in self.screens:
+            pass
+        else:
+            self.screens.append(screen)
+        print(self.screens)
         self.screens_size = len(self.screens) - 1
         self.current = self.screens[len(self.screens) - 1]
         print(f'size {self.screens_size}')
         print(f'current screen {screen}')
+
+    def screen_leave(self):
+        print(f"your were in {self.current}")
+        last_screens = self.current
+        self.screens.remove(last_screens)
+        print(self.screens)
+        self.screens_size = len(self.screens) - 1
+        self.current = self.screens[len(self.screens) - 1]
+        self.screen_capture(self.current)
 
     def keyboard_hooker(self):
         EventLoop.window.bind(on_keyboard=self.hook_keyboard)
