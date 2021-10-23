@@ -14,6 +14,8 @@ from kivy import utils
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.label import MDLabel
 
+from db_fetch import Fetch as FE
+
 Window.keyboard_anim_args = {"d": .2, "t": "linear"}
 Window.softinput_mode = "below_target"
 
@@ -59,9 +61,13 @@ class MainApp(MDApp):
     product_price = StringProperty('')
     Product_title = StringProperty('')
     product_stock = StringProperty('')
+    product_id = StringProperty('')
     product_description = StringProperty('')
     product_image = StringProperty('')
     product_images = []
+    # addition
+    food_product = []
+    food_products = []
 
     # user
     user_name = StringProperty('')
@@ -180,21 +186,65 @@ class MainApp(MDApp):
     def company_screen(self):
         pass
 
+    def desc(self, instance):
+        product = instance.id
+        self.product_name = self.food_products[product]["product_name"]
+        self.product_price = self.food_products[product]['product_price']
+        self.product_image = self.food_products[product]['image_url']
+        self.company_name = self.food_products[product]['company_name']
+        self.product_description = self.food_products[product]['product_description']
+        self.product_stock = self.food_products[product]['stock']
+        self.product_id = product
+
+        self.screen_capture('description')
+
     def keyboard_hooker(self):
         EventLoop.window.bind(on_keyboard=self.hook_keyboard)
+
+    ''''
+                    DOWN HERE STAYS ONLY Product Association FUNCTIONS
+
+        '''
+
+    def food_caller(self):
+        self.spin_dialog()
+        Clock.schedule_once(lambda x: self.Food(), 4)
+
+    def Food(self):
+        """
+                company_name:
+                company_phone:
+                image_url:
+                images:
+                product_description:
+                product_name:
+                product_price:
+                stock:
+                """
+        self.food_product = FE.Product(FE(), 'Food')
+        self.food_products = self.food_product
+        for x, y in self.food_product.items():
+            card = Foods(on_release=self.desc)
+            scroll = self.root.ids.front_shop
+            self.product_name = y["product_name"]
+            self.product_price = y["product_price"]
+            self.product_image = y["image_url"]
+            card.add_widget(AsyncImage(source=self.product_image))
+            card.add_widget(Labels(text=self.product_name, halign='center'))
+            card.add_widget(Labels(text='{:,}'.format(int(self.product_price)) + '/=Tsh', halign='center'))
+            card.id = x
+            scroll.add_widget(card)
+        self.spin_dismiss()
+
+    ''''
+                        UP HERE STAYS ONLY Product Association FUNCTIONS
+
+            '''
 
     ''''
                 DOWN HERE STAYS ONLY TESTING FUNCTIONS
     
     '''
-
-    def desc(self, instance):
-        self.product_name = instance.id
-        self.screen_capture('description')
-
-    def first(self):
-        self.spin_dialog()
-        Clock.schedule_once(lambda x: self.test(), 4)
 
     def test(self):
         for i in range(9):

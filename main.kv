@@ -70,7 +70,7 @@ ScreenManager:
     MDScreen:
         name:'food'
         on_enter:
-            app.first()
+            app.food_caller()
         MDBoxLayout:
             orientation: 'vertical'
             padding: dp(5), dp(5)
@@ -156,7 +156,7 @@ ScreenManager:
             orientation:'vertical'
             MDCard:
                 on_release:
-
+                    print(app.company_name)
                 md_bg_color: 1, 1, 1, 1
                 padding: "10dp"
                 #spacing: "5dp"
@@ -176,7 +176,7 @@ ScreenManager:
                     on_press:
                         app.screen_leave()
                 MDLabel:
-                    text:'company name'
+                    text:app.company_name
                     halign:'center'
                     font_name:'images/fonts/Gill Sans Medium.otf'
                     theme_text_color: "Custom"
@@ -212,7 +212,7 @@ ScreenManager:
                         theme_text_color: "Custom"
                         text_color: 78/255, 82/255, 84/255, 1
                     MDLabel:
-                        text:'This is  a greate movie i recommend that you should watch for it capture every reality about a heist a big heist'
+                        text:app.product_description
                         height: self.texture_size[1]
                         font_style:"Subtitle2"
                         font_name:'images/fonts/Gill Sans.otf'
