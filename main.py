@@ -1,3 +1,4 @@
+import threading
 import time
 from kivy.clock import Clock
 
@@ -65,7 +66,7 @@ class MainApp(MDApp):
     product_description = StringProperty('')
     product_image = StringProperty('')
     product_images = []
-    # addition
+    # for food
     food_product = []
     food_products = []
 
@@ -109,7 +110,8 @@ class MainApp(MDApp):
             if int(self.quantity) >= 1:
                 self.quantity = str(int(self.quantity) - 1)
         elif what == "plus":
-            self.quantity = str(int(self.quantity) + 1)
+            if self.quantity < self.product_stock:
+                self.quantity = str(int(self.quantity) + 1)
 
     def callback_for_menu_items(self, *args):
         toast(args[0])
@@ -186,6 +188,22 @@ class MainApp(MDApp):
     def company_screen(self):
         pass
 
+    def keyboard_hooker(self):
+        EventLoop.window.bind(on_keyboard=self.hook_keyboard)
+
+    ''''
+                    DOWN HERE STAYS ONLY Product Association FUNCTIONS
+
+        '''
+
+    def image_slider(self):
+        id = self.product_id
+        cate = 'Food'
+        slider = self.root.ids.image_slide
+        self.product_images = FE.image_stiller(FE(), id, cate)
+        for i in self.product_images:
+            slider.add_widget(AsyncImage(source=i))
+
     def desc(self, instance):
         product = instance.id
         self.product_name = self.food_products[product]["product_name"]
@@ -195,16 +213,10 @@ class MainApp(MDApp):
         self.product_description = self.food_products[product]['product_description']
         self.product_stock = self.food_products[product]['stock']
         self.product_id = product
+        thread = threading.Thread(target=self.image_slider())
+        thread.start()
 
         self.screen_capture('description')
-
-    def keyboard_hooker(self):
-        EventLoop.window.bind(on_keyboard=self.hook_keyboard)
-
-    ''''
-                    DOWN HERE STAYS ONLY Product Association FUNCTIONS
-
-        '''
 
     def food_caller(self):
         self.spin_dialog()

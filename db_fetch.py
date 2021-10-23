@@ -24,4 +24,18 @@ class Fetch:
             except:
                 return "No Internet!"
 
-
+    def image_stiller(self, product_id, cate):
+        image_list =[]
+        import firebase_admin
+        firebase_admin._apps.clear()
+        from firebase_admin import credentials, initialize_app, db
+        cred = credentials.Certificate("credential/farmzon-abdcb-c4c57249e43b.json")
+        initialize_app(cred, {'databaseURL': 'https://farmzon-abdcb.firebaseio.com/'})
+        store = db.reference("Shoppy").child("Products").child(cate)
+        stores = store.get()
+        for y, x in stores.items():
+            if y == product_id:
+                for c, v in x['images'].items():
+                    image_list.append(v['image_url'])
+                    print("getting", image_list)
+        return image_list
