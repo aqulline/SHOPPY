@@ -116,6 +116,12 @@ ScreenManager:
                         halign: 'center'
 
     MDScreen:
+        name:'creator'
+        FloatLayout:
+            MDLabel:
+                text:'WELCOME'
+
+    MDScreen:
         name:'market'
         FloatLayout:
             Shops:
@@ -150,7 +156,7 @@ ScreenManager:
             orientation:'vertical'
             MDCard:
                 on_release:
-                    print('Fucked')
+
                 md_bg_color: 1, 1, 1, 1
                 padding: "10dp"
                 #spacing: "5dp"
@@ -193,7 +199,7 @@ ScreenManager:
                     padding: dp(10), dp(4)
                     spacing: dp(30)
                     Labels:
-                        text:'Lacasa De Papel'
+                        text:app.product_name
                         font_style:"H6"
                         font_name:'images/fonts/Gill Sans.otf'
                         theme_text_color: "Custom"

@@ -39,7 +39,7 @@ class MainApp(MDApp):
     size_y = NumericProperty(0)
     screens = ['entrance']
     screens_size = NumericProperty(len(screens) - 1)
-    current = StringProperty(screens[len(screens)-1])
+    current = StringProperty(screens[len(screens) - 1])
 
     # dialog's
     dialog_spin = None
@@ -70,6 +70,9 @@ class MainApp(MDApp):
     user_amount = StringProperty('')
     user_following = []
     user_orders = []
+    user_products = []
+    user_bio = StringProperty('')
+    user_logo = StringProperty('')
 
     def on_start(self):
         self.backgrounds_colors()
@@ -125,7 +128,7 @@ class MainApp(MDApp):
             bottom_sheet_menu.add_item(
                 i,
                 lambda x, y=i: self.callback_for_menu_items(y),
-                icon="food"
+                icon="google-maps"
             )
         for i in range(1, 22):
             bottom_sheet_menu.add_item(
@@ -133,7 +136,7 @@ class MainApp(MDApp):
                 lambda x, y=i: self.callback_for_menu_items(
                     f"Block {y}"
                 ),
-                icon='food'
+                icon='google-maps'
             )
         bottom_sheet_menu.open()
 
@@ -174,6 +177,9 @@ class MainApp(MDApp):
         self.current = self.screens[len(self.screens) - 1]
         self.screen_capture(self.current)
 
+    def company_screen(self):
+        pass
+
     def keyboard_hooker(self):
         EventLoop.window.bind(on_keyboard=self.hook_keyboard)
 
@@ -182,7 +188,8 @@ class MainApp(MDApp):
     
     '''
 
-    def desc(self):
+    def desc(self, instance):
+        self.product_name = instance.id
         self.screen_capture('description')
 
     def first(self):
@@ -191,7 +198,7 @@ class MainApp(MDApp):
 
     def test(self):
         for i in range(9):
-            card = Foods(on_release=lambda x: self.desc())
+            card = Foods(on_release=self.desc)
             scroll = self.root.ids.front_shop
             self.product_name = f'product{i}'
             self.product_price = f'price{i}/tsh'
@@ -199,8 +206,14 @@ class MainApp(MDApp):
             card.add_widget(AsyncImage(source='images/test.png'))
             card.add_widget(Labels(text=self.product_name, halign='center'))
             card.add_widget(Labels(text=self.product_price, halign='center'))
+            card.id = f'product{i}'
             scroll.add_widget(card)
         self.spin_dismiss()
+
+    ''''
+                    UP HERE STAYS ONLY TESTING FUNCTIONS
+
+        '''
 
     def build(self):
         self.theme_cls.theme_style = "Light"
