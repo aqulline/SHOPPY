@@ -116,10 +116,71 @@ ScreenManager:
                         halign: 'center'
 
     MDScreen:
-        name:'creator'
+        name:'company'
         FloatLayout:
+            MDIconButton:
+                icon:'chevron-left'
+                theme_text_color: "Custom"
+                pos_hint:{'center_x':.1, 'center_y':.95}
+                text_color: 83 / 255, 186 / 255, 155 / 255, 1
+                on_press:
+                    app.screen_leave()
+            AsyncImage:
+                source:app.company_logo
+                pos_hint:{'center_x':.5, 'center_y':.85}
+                size_hint: None, None
+                size: "200dp", "200dp"
             MDLabel:
-                text:'WELCOME'
+                text:app.company_name
+                pos_hint:{'center_x':.5, 'center_y':.7}
+                halign:'center'
+                bold:True
+                underline: True
+                font_name:'images/fonts/Gill Sans.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
+            MDLabel:
+                text:'Followers'
+                pos_hint:{'center_x':.35, 'center_y':.65}
+                halign:'center'
+                bold:True
+                font_name:'images/fonts/Gill Sans.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
+            MDLabel:
+                text:'Following'
+                pos_hint:{'center_x':.7, 'center_y':.65}
+                halign:'center'
+                bold:True
+                font_name:'images/fonts/Gill Sans.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
+            MDLabel:
+                text:app.company_followers
+                pos_hint:{'center_x':.35, 'center_y':.6}
+                halign:'center'
+                bold:True
+                font_name:'images/fonts/Gill Sans.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
+            MDLabel:
+                text:app.company_following
+                pos_hint:{'center_x':.7, 'center_y':.6}
+                halign:'center'
+                bold:True
+                font_name:'images/fonts/Gill Sans.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
+            MDRaisedButton:
+                id:follow
+                text: "follow"
+                pos_hint:{'center_x': .5, 'center_y': .53}
+                font_size: "18sp"
+                font_name: "images/fonts/Gill Sans.otf"
+            MDSeparator:
+                height: "5dp"
+                pos_hint:{'center_x': .5, 'center_y': .48}
+
 
     MDScreen:
         name:'market'
@@ -156,7 +217,7 @@ ScreenManager:
             orientation:'vertical'
             MDCard:
                 on_release:
-                    print(app.company_name)
+                    app.company(app.company_phone)
                 md_bg_color: 1, 1, 1, 1
                 padding: "10dp"
                 #spacing: "5dp"
@@ -172,16 +233,17 @@ ScreenManager:
                 MDIconButton:
                     icon:'chevron-left'
                     theme_text_color: "Custom"
-                    text_color: 78/255, 82/255, 84/255, 1
+                    text_color: 83 / 255, 186 / 255, 155 / 255, 1
                     on_press:
                         app.screen_leave()
                 MDLabel:
                     text:app.company_name
                     halign:'center'
-                    font_name:'images/fonts/Gill Sans Medium.otf'
+                    bold:True
+                    font_name:'images/fonts/Gill Sans.otf'
                     theme_text_color: "Custom"
                     text_color: 78/255, 82/255, 84/255, 1
-                    font_style:"Subtitle1"
+                    #font_style:"Subtitle1"
             MDCarousel:
                 id:image_slide
             ScrollView:
@@ -248,19 +310,17 @@ ScreenManager:
 
                     MDDropDownItem:
                         id:drop_item_one
-                        md_bg_color:self.theme_cls.primary_color
+                        md_bg_color:83 / 225, 186 / 225, 115 / 225, 1
                         pos_hint: {'center_x': .5, 'center_y': .19}
                         text: app.location
                         on_release:
                             app.location_sheet()
-                    MDRectangleFlatIconButton:
-                        icon: "cart-variant"
-                        text: "buy"
-                        #theme_text_color: "Custom"
-                        text_color: 0, 0, 0, 1
-                        line_color: 0, 0, 0, 1
-                        icon_color: 0, 0, 0, 1
-                        pos_hint: {'center_x': .5, 'center_y': .19}
+                    MDRaisedButton:
+                        id:buy
+                        text: "Order"
+                        pos_hint:{'center_x': .5, 'center_y': .19}
+                        font_size: "18sp"
+                        font_name: "images/fonts/Gill Sans.otf"
 
 <Shops@MDCard>:
     orientation: "vertical"

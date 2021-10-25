@@ -53,9 +53,11 @@ class MainApp(MDApp):
     company_name = StringProperty('')
     company_bio = StringProperty('')
     company_followers = StringProperty('')
+    company_following = StringProperty('')
     company_products = []
     company_logo = StringProperty('')
     company_phone = StringProperty('')
+    company_details = []
 
     # product
     product_name = StringProperty('')
@@ -92,6 +94,12 @@ class MainApp(MDApp):
 
         nav = self.root.ids.bnav
         nav.text_color_active = 83 / 225, 186 / 225, 115 / 225, 1
+
+        button = self.root.ids.buy
+        button.md_bg_color = 83 / 225, 186 / 225, 115 / 225, 1
+
+        button1 = self.root.ids.follow
+        button1.md_bg_color = 83 / 225, 186 / 225, 115 / 225, 1
 
     def spin_dialog(self):
         if not self.dialog_spin:
@@ -146,6 +154,7 @@ class MainApp(MDApp):
                 ),
                 icon='google-maps'
             )
+        bottom_sheet_menu.radius_from = 'top'
         bottom_sheet_menu.open()
 
     def hook_keyboard(self, window, key, *largs):
@@ -192,7 +201,7 @@ class MainApp(MDApp):
         EventLoop.window.bind(on_keyboard=self.hook_keyboard)
 
     ''''
-                    DOWN HERE STAYS ONLY Product Association FUNCTIONS
+                    DOWN HERE STAYS ONLY Product and COMPANY Association FUNCTIONS
 
         '''
 
@@ -210,6 +219,7 @@ class MainApp(MDApp):
         self.product_price = self.food_products[product]['product_price']
         self.product_image = self.food_products[product]['image_url']
         self.company_name = self.food_products[product]['company_name']
+        self.company_phone = self.food_products[product]['company_phone']
         self.product_description = self.food_products[product]['product_description']
         self.product_stock = self.food_products[product]['stock']
         self.product_id = product
@@ -217,6 +227,26 @@ class MainApp(MDApp):
         thread.start()
 
         self.screen_capture('description')
+
+    def company(self, instance):
+        """
+                bio:
+                customer_name:
+                customer_password:
+                customer_phone:
+                followers:
+                following:
+                logo:
+                other_number:
+                products::
+        """
+        self.company_details = FE.company_stiller(FE(), instance)
+        self.company_name = self.company_details['customer_name']
+        self.company_logo = self.company_details['logo']
+        self.company_bio = self.company_details['bio']
+        self.company_followers, self.company_following = self.company_details['followers'], self.company_details['following']
+        self.company_phone = self.company_details['customer_phone']
+        self.screen_capture('company')
 
     def food_caller(self):
         self.spin_dialog()
