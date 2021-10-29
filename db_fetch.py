@@ -67,5 +67,18 @@ class Fetch:
             except:
                 return "No Internet!"
 
+    def company_products(self, phone):
+        import firebase_admin
+        firebase_admin._apps.clear()
+        from firebase_admin import credentials, initialize_app, db
+        if not firebase_admin._apps:
+            try:
+                cred = credentials.Certificate("credential/farmzon-abdcb-c4c57249e43b.json")
+                initialize_app(cred, {'databaseURL': 'https://farmzon-abdcb.firebaseio.com/'})
+                store = db.reference("Shoppy").child("Company").child(phone).child('products')
+                stores = store.get()
+                return stores
+            except:
+                return "No Internet!"
 
 # Fetch.company_stiller(Fetch(), '0687863886')
