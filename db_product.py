@@ -40,7 +40,7 @@ class Upload_Data:
                 return path
 
     def upload_product_image(self, cate, catee, path, phone, phone_other, name, price, product_name, password, id,
-                             description, bio, followers, following, logo, stock):
+                             description, bio, followers, following, logo, stock, bought):
         print("START.....")
         if True:
             from firebase_admin import credentials, initialize_app, storage
@@ -64,11 +64,11 @@ class Upload_Data:
                 image = self.logo(logo, phone, name)
                 self.register_admin(phone, phone_other, name, price, product_name, password, id, cate, catee, bio,
                                     followers,
-                                    following, image, stock, description)
+                                    following, image, stock, description, bought)
 
     def register_admin(self, phone, phone_other, name, price, product_name, password, product_id, cate, catee, bio,
                        followers,
-                       following, logo, stock, description):
+                       following, logo, stock, description, bought):
         if True:
             import firebase_admin
             firebase_admin._apps.clear()
@@ -111,6 +111,7 @@ class Upload_Data:
                             "product_description": description,
                             "image_url": Upload_Data.url[0],
                             "company_phone": phone,
+                            "bought_times": bought,
                             "company_name": name,
                             "stock":stock
                         }
@@ -174,16 +175,17 @@ class Upload_Data:
 bio = 'fata mambo yako'
 followers = '0'
 following = '0'
-logo = 'C:/Users/DELL/Downloads/beast.jpg'
+logo = '/home/alpha/Downloads/dk.png'
 stock = '7'
-image_path = ['C:/Users/DELL/Downloads/imagess.jpeg', 'C:/Users/DELL/Downloads/imags.jpeg',
-              'C:/Users/DELL/Downloads/images.jpeg',
-              'C:/Users/DELL/Downloads/imges.jpeg']
+bought = '3'
+image_path = ['/home/alpha/Pictures/shoppy_img/pic2.jpeg', '/home/alpha/Pictures/shoppy_img/pic1.jpeg',
+              '/home/alpha/Pictures/shoppy_img/pic3.jpeg',
+              '/home/alpha/Pictures/shoppy_img/pic4.jpg']
 Upload_Data.upload_product_image(Upload_Data(), "customer", "Food",
                                  image_path, "0687863886", "0734794026", "Zawadi kamote", "10000", "Perfumes", "1010",
                                  Upload_Data.id_generator(
                                      Upload_Data()),
                                  "Black opium ml50, blue princess ml100, locasit ml100, boss ml100, bei @10k~12/=",
-                                 bio, followers, following, logo, stock)
+                                 bio, followers, following, logo, stock, bought)
 #
 # Upload_Data.register_admin(Upload_Data(), "0788204327", "machungwa", "120", "nyanya", "juice.png", "906070")

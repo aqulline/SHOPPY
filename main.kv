@@ -17,7 +17,6 @@ ScreenManager:
                     pos_hint:{'center_x':.5, 'center_y': .6}
                     theme_text_color: "Custom"
                     text_color: 83/225, 186/225, 115/225, 1
-
                 MDLabel:
                     text:"FOOD"
                     bold:True
@@ -108,7 +107,7 @@ ScreenManager:
 
                 MDBottomNavigationItem:
                     name: 'account'
-                    text: 'Account'
+                    text: 'Profile'
                     icon: 'account-outline'
 
                     MDLabel:
@@ -125,23 +124,32 @@ ScreenManager:
                 text_color: 83 / 255, 186 / 255, 155 / 255, 1
                 on_press:
                     app.screen_leave()
+            MDLabel:
+                text:app.company_name
+                pos_hint:{'center_x':.5, 'center_y':.95}
+                halign:'center'
+                font_style:'H6'
+                bold:True
+                underline: True
+                font_name:'images/fonts/Gill Sans.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
             AsyncImage:
                 source:app.company_logo
                 pos_hint:{'center_x':.5, 'center_y':.85}
                 size_hint: None, None
                 size: "200dp", "200dp"
             MDLabel:
-                text:app.company_name
-                pos_hint:{'center_x':.5, 'center_y':.7}
+                text:app.company_bio
+                pos_hint:{'center_x':.5, 'center_y':.73}
                 halign:'center'
                 bold:True
-                underline: True
                 font_name:'images/fonts/Gill Sans.otf'
                 theme_text_color: "Custom"
                 text_color: 78/255, 82/255, 84/255, 1
             MDLabel:
                 text:'Followers'
-                pos_hint:{'center_x':.35, 'center_y':.65}
+                pos_hint:{'center_x':.35, 'center_y':.68}
                 halign:'center'
                 bold:True
                 font_name:'images/fonts/Gill Sans.otf'
@@ -149,7 +157,7 @@ ScreenManager:
                 text_color: 78/255, 82/255, 84/255, 1
             MDLabel:
                 text:'Following'
-                pos_hint:{'center_x':.7, 'center_y':.65}
+                pos_hint:{'center_x':.7, 'center_y':.68}
                 halign:'center'
                 bold:True
                 font_name:'images/fonts/Gill Sans.otf'
@@ -157,7 +165,7 @@ ScreenManager:
                 text_color: 78/255, 82/255, 84/255, 1
             MDLabel:
                 text:app.company_followers
-                pos_hint:{'center_x':.35, 'center_y':.6}
+                pos_hint:{'center_x':.35, 'center_y':.63}
                 halign:'center'
                 bold:True
                 font_name:'images/fonts/Gill Sans.otf'
@@ -165,7 +173,7 @@ ScreenManager:
                 text_color: 78/255, 82/255, 84/255, 1
             MDLabel:
                 text:app.company_following
-                pos_hint:{'center_x':.7, 'center_y':.6}
+                pos_hint:{'center_x':.7, 'center_y':.63}
                 halign:'center'
                 bold:True
                 font_name:'images/fonts/Gill Sans.otf'
@@ -174,12 +182,32 @@ ScreenManager:
             MDRaisedButton:
                 id:follow
                 text: "follow"
-                pos_hint:{'center_x': .5, 'center_y': .53}
+                pos_hint:{'center_x': .53, 'center_y': .59}
                 font_size: "18sp"
                 font_name: "images/fonts/Gill Sans.otf"
             MDSeparator:
-                height: "5dp"
+                height: "4dp"
                 pos_hint:{'center_x': .5, 'center_y': .48}
+            MDLabel:
+                text:"Products"
+                pos_hint:{'center_x':.5, 'center_y':.51}
+                halign:'center'
+                font_style:'Subtitle1'
+                bold:True
+                font_name:'images/fonts/Gill Sans Bold.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
+            ScrollView:
+                size_hint_y: .5
+                pos_hint:{'center_x':.5, 'center_y':.23}
+                id:company_scroll
+                MDGridLayout:
+                    cols: 2
+                    adaptive_height: True
+                    padding: dp(10), dp(4)
+                    spacing: dp(30)
+                    id:cproducts
+
 
 
     MDScreen:
@@ -217,7 +245,7 @@ ScreenManager:
             orientation:'vertical'
             MDCard:
                 on_release:
-                    app.company(app.company_phone)
+                    app.company_screen(app.company_phone)
                 md_bg_color: 1, 1, 1, 1
                 padding: "10dp"
                 #spacing: "5dp"

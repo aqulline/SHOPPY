@@ -77,8 +77,11 @@ class Fetch:
                 initialize_app(cred, {'databaseURL': 'https://farmzon-abdcb.firebaseio.com/'})
                 store = db.reference("Shoppy").child("Company").child(phone).child('products')
                 stores = store.get()
+                print(stores)
                 return stores
             except:
                 return "No Internet!"
 
+
 # Fetch.company_stiller(Fetch(), '0687863886')
+# Fetch.company_products(Fetch(), '0687863886')

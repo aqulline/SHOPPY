@@ -1,6 +1,4 @@
 import threading
-import time
-from abc import ABC
 
 from kivy.clock import Clock
 
@@ -28,6 +26,7 @@ if utils.platform != 'android':
 
 class Spin(MDBoxLayout):
     pass
+
 
 class Alert(MDBoxLayout):
     pass
@@ -77,6 +76,17 @@ class MainApp(MDApp):
     # for food
     food_product = []
     food_products = []
+
+    # Temporary
+    t_company_products = []
+    t_company_product = []
+    t_product_name = StringProperty('')
+    t_product_price = StringProperty('')
+    t_Product_title = StringProperty('')
+    t_product_stock = StringProperty('')
+    t_product_id = StringProperty('')
+    t_product_description = StringProperty('')
+    t_product_image = StringProperty('')
 
     # user
     user_name = StringProperty('')
@@ -212,8 +222,10 @@ class MainApp(MDApp):
         self.current = self.screens[len(self.screens) - 1]
         self.screen_capture(self.current)
 
-    def company_screen(self):
-        pass
+    def company_screen(self, instance):
+        self.screen_capture('company')
+        self.spin_dialog()
+        Clock.schedule_once(lambda x: self.company(instance), 4)
 
     def keyboard_hooker(self):
         EventLoop.window.bind(on_keyboard=self.hook_keyboard)
@@ -265,7 +277,7 @@ class MainApp(MDApp):
         self.company_followers, self.company_following = self.company_details['followers'], self.company_details[
             'following']
         self.company_phone = self.company_details['customer_phone']
-        self.screen_capture('company')
+        self.company_product(instance)
 
     def food_caller(self):
         self.spin_dialog()
@@ -302,8 +314,26 @@ class MainApp(MDApp):
                 scroll.add_widget(card)
             self.spin_dismiss()
 
-    def company_products(self):
-        pass
+    def company_product(self, phone):
+        self.t_company_product = FE.company_products(FE(), phone)
+        if self.t_company_product == "No Internet!":
+            toast('Network problem!')
+            self.spin_dismiss()
+            self.dialog_alert()
+        else:
+            self.t_company_products = self.t_company_product
+            for x, y in self.t_company_product.items():
+                card = Foods(on_release=self.desc)
+                scroll = self.root.ids.cproducts
+                self.product_name = y["product_name"]
+                self.product_price = y["product_price"]
+                self.product_image = y["image_url"]
+                card.add_widget(AsyncImage(source=self.product_image))
+                card.add_widget(Labels(text=self.product_name, halign='center'))
+                card.add_widget(Labels(text='{:,}'.format(int(self.product_price)) + '/=Tsh', halign='center'))
+                card.id = x
+                scroll.add_widget(card)
+            self.spin_dismiss()
 
     ''''
                         UP HERE STAYS ONLY Product Association FUNCTIONS
@@ -318,7 +348,7 @@ class MainApp(MDApp):
     def test(self):
         for i in range(9):
             card = Foods(on_release=self.desc)
-            scroll = self.root.ids.front_shop
+            scroll = self.root.ids.cproducts
             self.product_name = f'product{i}'
             self.product_price = f'price{i}/tsh'
             self.company_name = i * 'aa'
