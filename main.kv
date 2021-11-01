@@ -4,6 +4,35 @@ ScreenManager:
     transition:sm.FadeTransition(duration=.0)
 
     MDScreen:
+        radius: [25, 25, 25, 25]
+        md_bg_color:83 / 225, 186 / 225, 115 / 225, 1
+        on_enter:
+            app.check_user()
+        MDBoxLayout:
+            orientation:'vertical'
+            MDLabel:
+                text:'SHOPPY'
+                halign:'center'
+                bold:True
+                size_hint:None, None
+                font_style:'H2'
+                size_hint:1, 5
+                font_name:'images/fonts/Gill Sans Bold.otf'
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+            MDLabel:
+                text:'Welcome!'
+                halign:'center'
+                bold:True
+                size_hint:None, None
+                font_style:'H4'
+                size_hint:1, 5
+                font_name:'images/fonts/Gill Sans Bold.otf'
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+
+
+    MDScreen:
         md_bg_color: 245/255, 245/255, 245/255, 1
         name:"entrance"
         FloatLayout:
@@ -109,6 +138,8 @@ ScreenManager:
                     name: 'account'
                     text: 'Profile'
                     icon: 'account-outline'
+                    on_enter:
+                        app.check_user()
 
                     MDLabel:
                         text: 'JS'
@@ -349,6 +380,45 @@ ScreenManager:
                         pos_hint:{'center_x': .5, 'center_y': .19}
                         font_size: "18sp"
                         font_name: "images/fonts/Gill Sans.otf"
+
+    MDScreen:
+        name:'register'
+        FloatLayout
+            orientation:'vertical'
+            MDLabel:
+                text:'Register Once!'
+                halign:"center"
+                font_style:'H4'
+                pos_hint:{'center_x':.5, 'center_y':.9}
+                theme_text_color: "Custom"
+                text_color: 83 / 225, 186 / 225, 115 / 225, 1
+                font_name:'images/fonts/Gill Sans.otf'
+                height: self.texture_size[1]
+                width: self.texture_size[1]
+            MDIcon:
+                icon:'phone'
+                size_hint:None, None
+                pos_hint:{'center_x':.2, 'center_y':.7}
+            MDIcon:
+                size_hint:None,None
+                icon:'account'
+                pos_hint:{'center_x':.2, 'center_y':.6}
+            NumberOnlyField:
+                size_hint: .7, None
+                hint_text:"Phone number:"
+                pos_hint:{'center_x':.5, 'center_y':.7}
+                text_color: 0, 0, 0, 1
+            MDTextField:
+                size_hint: .7, None
+                pos_hint:{'center_x':.5, 'center_y':.6}
+                hint_text:"Username:"
+                text_color: 0, 0, 0, 1
+            MDRaisedButton:
+                id:b_register
+                text: "Register"
+                pos_hint:{'center_x':.5, 'center_y':.4}
+                md_bg_color: 83 / 225, 186 / 225, 115 / 225, 1
+
 
 <Shops@MDCard>:
     orientation: "vertical"

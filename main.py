@@ -1,3 +1,5 @@
+import os
+import re
 import threading
 
 from kivy.clock import Clock
@@ -12,8 +14,12 @@ from kivy.base import EventLoop
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
 from kivy import utils
+import phonenumbers
+from phonenumbers import carrier
+from phonenumbers.phonenumberutil import number_type
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.label import MDLabel
+from kivymd.uix.textfield import MDTextField
 
 from db_fetch import Fetch as FE
 
@@ -38,6 +44,22 @@ class Foods(MDCard):
 
 class Labels(MDLabel):
     pass
+
+
+class NumberOnlyField(MDTextField):
+    pat = re.compile('[^0-9]')
+
+    def insert_text(self, substring, from_undo=False):
+
+        pat = self.pat
+
+        if "." in self.text:
+            s = re.sub(pat, "", substring)
+
+        else:
+            s = ".".join([re.sub(pat, "", s) for s in substring.split(".", 1)])
+
+        return super(NumberOnlyField, self).insert_text(s, from_undo=from_undo)
 
 
 class MainApp(MDApp):
@@ -98,10 +120,13 @@ class MainApp(MDApp):
     user_products = []
     user_bio = StringProperty('')
     user_logo = StringProperty('')
+    user_login = NumericProperty(0)
+    user_course = StringProperty('')
 
     def on_start(self):
         self.backgrounds_colors()
         self.keyboard_hooker()
+        self.call_look()
 
     def backgrounds_colors(self):
         toolbar = self.root.ids.tool
@@ -117,10 +142,14 @@ class MainApp(MDApp):
         button1 = self.root.ids.follow
         button1.md_bg_color = 83 / 225, 186 / 225, 115 / 225, 1
 
+        button2 = self.root.ids.b_register
+        button2.md_bg_color = 83 / 225, 186 / 225, 115 / 225, 1
+
     def spin_dialog(self):
         if not self.dialog_spin:
             self.dialog_spin = MDDialog(
                 type="custom",
+                auto_dismiss=False,
                 size_hint=(.43, None),
                 content_cls=Spin(),
             )
@@ -184,6 +213,66 @@ class MainApp(MDApp):
             )
         bottom_sheet_menu.radius_from = 'top'
         bottom_sheet_menu.open()
+
+    def phone_number_check_admin(self, phone):
+        new_number = ""
+        if phone != "":
+            for i in range(phone.__len__()):
+                if i == 0:
+                    pass
+                else:
+                    new_number = new_number + phone[i]
+            number = "+255" + new_number
+            if not carrier._is_mobile(number_type(phonenumbers.parse(number))):
+                toast("Please check your phone number!", 1)
+                return False
+            else:
+                self.public_number = number
+                return True
+        else:
+            toast("enter phone number!")
+
+    def validate_user(self, phone, name):
+        if self.phone_number_check_admin(phone):
+            toast("please enter your phone number correctly")
+        elif name == "":
+            toast("please enter your name")
+        else:
+            pass
+
+    def call_look(self):
+        self.spin_dialog()
+        Clock.schedule_once(lambda x: self.look_up(), 3)
+
+    def look_up(self):
+        sm = self.root
+        file_size = os.path.getsize("credential/admin.txt")
+        if file_size == 0:
+            sm.current = "register"
+            self.spin_dismiss()
+        else:
+            self.spin_dialog()
+            sm.current = "admin_main"
+            thread = threading.Thread(target=self.check_user)
+            thread.start()
+            thread.join()
+            self.spin_dismiss()
+
+    def check_user(self):
+        print('hi')
+        if self.user_login == 0:
+            self.user_login = 1 + self.user_login
+            file1 = open('credential/admin.txt', 'r')
+            file2 = open("credential/admin_info.txt")
+            Lines = file1.readlines()
+            Lines2 = file2.readlines()
+            # Strips the newline character
+            self.user_phone = Lines[0].strip()
+            self.user_bio = Lines[1].strip()
+            self.user_name = Lines2[0]
+        else:
+            sm = self.root
+            sm.current = "admin_main"
 
     def hook_keyboard(self, window, key, *largs):
         print(self.screens_size)
