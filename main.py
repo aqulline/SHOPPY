@@ -109,6 +109,7 @@ class MainApp(MDApp):
     t_product_id = StringProperty('')
     t_product_description = StringProperty('')
     t_product_image = StringProperty('')
+    t_price_comma = StringProperty('')
 
     # user
     user_name = StringProperty('')
@@ -289,6 +290,7 @@ class MainApp(MDApp):
         self.product_description = self.food_products[product]['product_description']
         self.product_stock = self.food_products[product]['stock']
         self.product_id = product
+        self.t_price_comma = '{:,}'.format(int(self.product_price))
         thread = threading.Thread(target=self.image_slider())
         thread.start()
 
