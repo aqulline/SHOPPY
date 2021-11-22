@@ -113,11 +113,12 @@ class Upload_Data:
                             "company_phone": phone,
                             "bought_times": bought,
                             "company_name": name,
-                            "stock":stock
+                            "stock": stock
                         }
                     )
                     for i in Upload_Data.url:
-                        ref_image = db.reference("Shoppy").child("Products").child(catee).child(product_id).child("images").child(
+                        ref_image = db.reference("Shoppy").child("Products").child(catee).child(product_id).child(
+                            "images").child(
                             self.id_generator())
                         ref_image.set({
                             "image_url": i
@@ -156,6 +157,51 @@ class Upload_Data:
                         }
                     )
 
+    def letters(self):
+        print("Logo START.....")
+        if True:
+            from firebase_admin import credentials, initialize_app, storage
+            print("yes")
+            import firebase_admin
+            from string import ascii_uppercase
+            firebase_admin._apps.clear()
+            if not firebase_admin._apps:
+                print("ok good,,")
+                cred = credentials.Certificate("credential/farmzon-abdcb-c4c57249e43b.json")
+                default = initialize_app(cred, {'storageBucket': 'farmzon-abdcb.appspot.com'})
+                print("WELDING..")
+                bucket = storage.bucket()
+                li = []
+                for i in ascii_uppercase:
+                    name = i
+                    path = '/home/alpha/Documents/Letters/' + name + '.png'
+                    blob = bucket.blob("Letters" + '/' + name)
+                    blob.upload_from_filename(path)
+                    blob.make_public()
+                    print("NICE...")
+                    path = blob.public_url
+                    print("your file url", Upload_Data.url)
+                    self.letters_path(path, i)
+                    print(path)
+                    print(i)
+
+    def letters_path(self, path, name):
+        if True:
+            import firebase_admin
+            firebase_admin._apps.clear()
+            from firebase_admin import credentials, initialize_app, db
+            if not firebase_admin._apps:
+                cred = credentials.Certificate("credential/farmzon-abdcb-c4c57249e43b.json")
+                initialize_app(cred, {'databaseURL': 'https://farmzon-abdcb.firebaseio.com/'})
+                ref = db.reference('Shoppy').child("Letters").child(name)
+                print("New Start")
+                ref.set(
+                    {
+                        "url": path
+                    }
+                )
+
+
     def id_generator(self):
         not_allowed = ".-:"
         date1 = datetime.datetime.now()
@@ -171,21 +217,23 @@ class Upload_Data:
 
     print("Thanks!!!!")
 
+# Upload_Data.letters(Upload_Data())
 
-bio = 'fata mambo yako'
-followers = '0'
-following = '0'
-logo = '/home/alpha/Downloads/dk.png'
-stock = '7'
-bought = '3'
-image_path = ['/home/alpha/Pictures/shoppy_img/pic2.jpeg', '/home/alpha/Pictures/shoppy_img/pic1.jpeg',
-              '/home/alpha/Pictures/shoppy_img/pic3.jpeg',
-              '/home/alpha/Pictures/shoppy_img/pic4.jpg']
-Upload_Data.upload_product_image(Upload_Data(), "customer", "Food",
-                                 image_path, "0687863886", "0734794026", "Zawadi kamote", "10000", "Perfumes", "1010",
-                                 Upload_Data.id_generator(
-                                     Upload_Data()),
-                                 "Black opium ml50, blue princess ml100, locasit ml100, boss ml100, bei @10k~12/=",
-                                 bio, followers, following, logo, stock, bought)
+
+# bio = 'fata mambo yako'
+# followers = '0'
+# following = '0'
+# logo = '/home/alpha/Downloads/dk.png'
+# stock = '7'
+# bought = '3'
+# image_path = ['/home/alpha/Pictures/shoppy_img/pic2.jpeg', '/home/alpha/Pictures/shoppy_img/pic1.jpeg',
+#              '/home/alpha/Pictures/shoppy_img/pic3.jpeg',
+#              '/home/alpha/Pictures/shoppy_img/pic4.jpg']
+# Upload_Data.upload_product_image(Upload_Data(), "customer", "Food",
+#                                 image_path, "0687863886", "0734794026", "Zawadi kamote", "10000", "Perfumes", "1010",
+#                                 Upload_Data.id_generator(
+#                                     Upload_Data()),
+#                                 "Black opium ml50, blue princess ml100, locasit ml100, boss ml100, bei @10k~12/=",
+#                                 bio, followers, following, logo, stock, bought)
 #
 # Upload_Data.register_admin(Upload_Data(), "0788204327", "machungwa", "120", "nyanya", "juice.png", "906070")

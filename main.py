@@ -126,7 +126,8 @@ class MainApp(MDApp):
     def on_start(self):
         self.backgrounds_colors()
         self.keyboard_hooker()
-        self.call_look()
+        thread = threading.Thread(target=self.call_look)
+        thread.start()
 
     def backgrounds_colors(self):
         toolbar = self.root.ids.tool
@@ -140,7 +141,7 @@ class MainApp(MDApp):
         button.md_bg_color = 83 / 225, 186 / 225, 115 / 225, 1
 
         button1 = self.root.ids.follow
-        button1.md_bg_color = 83 / 225, 186 / 225, 115 / 225, 1
+        button1.md_bg_color = 78/255, 82/255, 84/255, 1
 
         button2 = self.root.ids.b_register
         button2.md_bg_color = 83 / 225, 186 / 225, 115 / 225, 1
@@ -214,65 +215,11 @@ class MainApp(MDApp):
         bottom_sheet_menu.radius_from = 'top'
         bottom_sheet_menu.open()
 
-    def phone_number_check_admin(self, phone):
-        new_number = ""
-        if phone != "":
-            for i in range(phone.__len__()):
-                if i == 0:
-                    pass
-                else:
-                    new_number = new_number + phone[i]
-            number = "+255" + new_number
-            if not carrier._is_mobile(number_type(phonenumbers.parse(number))):
-                toast("Please check your phone number!", 1)
-                return False
-            else:
-                self.public_number = number
-                return True
-        else:
-            toast("enter phone number!")
+    def refresh(self):
+        self.alert_dismiss()
+        self.food_caller()
 
-    def validate_user(self, phone, name):
-        if self.phone_number_check_admin(phone):
-            toast("please enter your phone number correctly")
-        elif name == "":
-            toast("please enter your name")
-        else:
-            pass
 
-    def call_look(self):
-        self.spin_dialog()
-        Clock.schedule_once(lambda x: self.look_up(), 3)
-
-    def look_up(self):
-        sm = self.root
-        file_size = os.path.getsize("credential/admin.txt")
-        if file_size == 0:
-            sm.current = "register"
-            self.spin_dismiss()
-        else:
-            self.spin_dialog()
-            sm.current = "admin_main"
-            thread = threading.Thread(target=self.check_user)
-            thread.start()
-            thread.join()
-            self.spin_dismiss()
-
-    def check_user(self):
-        print('hi')
-        if self.user_login == 0:
-            self.user_login = 1 + self.user_login
-            file1 = open('credential/admin.txt', 'r')
-            file2 = open("credential/admin_info.txt")
-            Lines = file1.readlines()
-            Lines2 = file2.readlines()
-            # Strips the newline character
-            self.user_phone = Lines[0].strip()
-            self.user_bio = Lines[1].strip()
-            self.user_name = Lines2[0]
-        else:
-            sm = self.root
-            sm.current = "admin_main"
 
     def hook_keyboard(self, window, key, *largs):
         print(self.screens_size)
@@ -433,6 +380,92 @@ class MainApp(MDApp):
                 DOWN HERE STAYS ONLY TESTING FUNCTIONS
     
     '''
+
+    """ DOWN HERE STAYS USER ASSOCIATION FUNCTIONS"""
+
+    def phone_number_check_admin(self, phone):
+        new_number = ""
+        if phone != "":
+            for i in range(phone.__len__()):
+                if i == 0:
+                    pass
+                else:
+                    new_number = new_number + phone[i]
+            number = "+255" + new_number
+            if not carrier._is_mobile(number_type(phonenumbers.parse(number))):
+                toast("Please check your phone number!", 1)
+                return False
+            else:
+                self.public_number = number
+                return True
+        else:
+            toast("enter phone number!")
+
+    def register_caller(self, phone, name):
+        from db_transf import Transfer as TR
+        try:
+            self.spin_dialog()
+            Clock.schedule_once(lambda x: self.Food(), 4)
+            TR.register(TR(), phone, name)
+            self.remember_me(phone, 'i am emma nyoo...', name)
+            self.spin_dismiss()
+            sm = self.root
+            sm.current = 'entrance'
+        except:
+            toast('OPPs!, No connection')
+
+    def validate_user(self, phone, name):
+        if not self.phone_number_check_admin(phone):
+            toast("please enter your phone number correctly")
+        elif name == "":
+            toast("please enter your name")
+        else:
+            self.register_caller(phone, name)
+
+    def call_look(self):
+        self.spin_dialog()
+        Clock.schedule_once(lambda x: self.look_up(), 5)
+
+    def look_up(self):
+        sm = self.root
+        file_size = os.path.getsize("credential/admin.txt")
+        if file_size == 0:
+            sm.current = "register"
+            self.spin_dismiss()
+        else:
+            self.spin_dialog()
+            sm.current = "entrance"
+            thread = threading.Thread(target=self.check_user)
+            thread.start()
+            thread.join()
+            self.spin_dismiss()
+
+    def check_user(self):
+        print('hi')
+        if self.user_login == 0:
+            self.user_login = 1 + self.user_login
+            file1 = open('credential/admin.txt', 'r')
+            file2 = open("credential/admin_info.txt")
+            Lines = file1.readlines()
+            Lines2 = file2.readlines()
+            # Strips the newline character
+            self.user_phone = Lines[0].strip()
+            dust = Lines[1].strip()
+            self.user_name = Lines2[0]
+        else:
+            sm = self.root
+            sm.current = "entrance"
+
+    def remember_me(self, phone, dust, name):
+        with open("credential/admin.txt", "w") as fl:
+            fl.write(phone + "\n")
+            fl.write(dust)
+        with open("credential/admin_info.txt", "w") as ui:
+            ui.write(name)
+        fl.close()
+        ui.close()
+
+    """ DOWN HERE STAYS USER ASSOCIATION FUNCTIONS"""
 
     def test(self):
         for i in range(9):

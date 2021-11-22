@@ -82,6 +82,24 @@ class Fetch:
             except:
                 return "No Internet!"
 
+    def Logos(self, name):
+        letter = str(name[0]).capitalize()
+        import firebase_admin
+        firebase_admin._apps.clear()
+        from firebase_admin import credentials, initialize_app, db
+        if not firebase_admin._apps:
+            try:
+                cred = credentials.Certificate("credential/farmzon-abdcb-c4c57249e43b.json")
+                initialize_app(cred, {'databaseURL': 'https://farmzon-abdcb.firebaseio.com/'})
+                store = db.reference("Shoppy").child("Letters").child(letter).child('url')
+                stores = store.get()
+                print(stores)
+                return stores
+            except:
+                print('No Internet!')
+                return "No Internet!"
 
+
+# Fetch.Logos(Fetch(), 'beast')
 # Fetch.company_stiller(Fetch(), '0687863886')
 # Fetch.company_products(Fetch(), '0687863886')

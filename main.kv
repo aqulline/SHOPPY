@@ -6,8 +6,6 @@ ScreenManager:
     MDScreen:
         radius: [25, 25, 25, 25]
         md_bg_color:83 / 225, 186 / 225, 115 / 225, 1
-        on_enter:
-            app.check_user()
         MDBoxLayout:
             orientation:'vertical'
             MDLabel:
@@ -215,6 +213,8 @@ ScreenManager:
                 text: "follow"
                 pos_hint:{'center_x': .53, 'center_y': .59}
                 font_size: "18sp"
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, .9
                 font_name: "images/fonts/Gill Sans.otf"
             MDSeparator:
                 height: "4dp"
@@ -383,41 +383,44 @@ ScreenManager:
 
     MDScreen:
         name:'register'
-        FloatLayout
+        FloatLayout:
             orientation:'vertical'
             MDLabel:
                 text:'Register Once!'
                 halign:"center"
                 font_style:'H4'
-                pos_hint:{'center_x':.5, 'center_y':.9}
+                pos_hint:{'center_x':.5, 'center_y':.85}
                 theme_text_color: "Custom"
                 text_color: 83 / 225, 186 / 225, 115 / 225, 1
                 font_name:'images/fonts/Gill Sans.otf'
                 height: self.texture_size[1]
                 width: self.texture_size[1]
-            MDIcon:
-                icon:'phone'
-                size_hint:None, None
-                pos_hint:{'center_x':.2, 'center_y':.7}
-            MDIcon:
-                size_hint:None,None
-                icon:'account'
-                pos_hint:{'center_x':.2, 'center_y':.6}
             NumberOnlyField:
-                size_hint: .7, None
+                id:number
+                mode: "rectangle"
+                fill_color: 0, 0, 0, .4
+                size_hint: .8, .1
                 hint_text:"Phone number:"
-                pos_hint:{'center_x':.5, 'center_y':.7}
+                pos_hint:{'center_x':.5, 'center_y':.73}
                 text_color: 0, 0, 0, 1
+                font_size: dp(25)
             MDTextField:
-                size_hint: .7, None
-                pos_hint:{'center_x':.5, 'center_y':.6}
+                id:username
+                mode: "rectangle"
+                fill_color: 0, 0, 0, .4
+                size_hint: .8, .1
+                pos_hint:{'center_x':.5, 'center_y':.58}
                 hint_text:"Username:"
                 text_color: 0, 0, 0, 1
+                font_size: dp(25)
             MDRaisedButton:
                 id:b_register
                 text: "Register"
-                pos_hint:{'center_x':.5, 'center_y':.4}
+                size_hint: .8, .06
+                pos_hint:{'center_x':.5, 'center_y':.35}
                 md_bg_color: 83 / 225, 186 / 225, 115 / 225, 1
+                on_release:
+                    app.validate_user(number.text, username.text)
 
 
 <Shops@MDCard>:
@@ -474,6 +477,8 @@ ScreenManager:
         theme_text_color: "Custom"
         text_color:78/255, 82/255, 84/255, 1
         pos_hint: {'center_x': .5, 'center_y': 1}
+
+
 <Alert>:
     orientation:'vertical'
     adaptive_height: True
@@ -492,3 +497,5 @@ ScreenManager:
             icon:'chevron-left'
         MDIconButton:
             icon:'refresh'
+            on_release:
+                app.refresh()
