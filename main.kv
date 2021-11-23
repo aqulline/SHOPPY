@@ -100,11 +100,6 @@ ScreenManager:
         MDBoxLayout:
             orientation: 'vertical'
             padding: dp(5), dp(5)
-            MDToolbar:
-                title: "Food and Drinks"
-                elevation: 10
-                id:tool
-                left_action_items: [["chevron-left", lambda x: app.screen_leave()]]
             MDBottomNavigation:
                 id:bnav
                 panel_color: 1, 1, 1, 1
@@ -113,15 +108,23 @@ ScreenManager:
                     name: 'home'
                     text: 'Home'
                     icon: 'home-outline'
-
-                    ScrollView:
-                        id: scroll
-                        MDGridLayout:
-                            cols: 2
-                            adaptive_height: True
-                            padding: dp(10), dp(4)
-                            spacing: dp(30)
-                            id:front_shop
+                    MDBoxLayout:
+                        orientation:'vertical'
+                        MDToolbar:
+                            title: "Food and Drinks"
+                            elevation: 10
+                            id:tool
+                            left_action_items: [["chevron-left", lambda x: app.screen_leave()]]
+                        MDBoxLayout:
+                            orientation:'vertical'
+                            ScrollView:
+                                id: scroll
+                                MDGridLayout:
+                                    cols: 2
+                                    adaptive_height: True
+                                    padding: dp(10), dp(4)
+                                    spacing: dp(30)
+                                    id:front_shop
 
                 MDBottomNavigationItem:
                     name: 'orders'
@@ -135,13 +138,48 @@ ScreenManager:
                 MDBottomNavigationItem:
                     name: 'account'
                     text: 'Profile'
-                    icon: 'account-outline'
+                    icon:
                     on_enter:
-                        app.check_user()
-
-                    MDLabel:
-                        text: 'JS'
-                        halign: 'center'
+                        app.profile_caller()
+                    FloatLayout:
+                        MDIconButton:
+                            icon:'chevron-left'
+                            theme_text_color: "Custom"
+                            pos_hint:{'center_x':.1, 'center_y':.95}
+                            text_color: 83 / 255, 186 / 255, 155 / 255, 1
+                            on_press:
+                                app.screen_leave()
+                        MDIconButton:
+                            # image-filter-vintage
+                            icon:'cog'
+                            theme_text_color: "Custom"
+                            pos_hint:{'center_x':.9, 'center_y':.95}
+                            text_color: 83 / 255, 186 / 255, 155 / 255, 1
+                            on_press:
+                                app.screen_leave()
+                        MDLabel:
+                            text:app.user_name
+                            pos_hint:{'center_x':.5, 'center_y':.95}
+                            halign:'center'
+                            font_style:'H6'
+                            bold:True
+                            underline: True
+                            font_name:'images/fonts/Gill Sans.otf'
+                            theme_text_color: "Custom"
+                            text_color: 78/255, 82/255, 84/255, 1
+                        AsyncImage:
+                            source:app.user_logo
+                            pos_hint:{'center_x':.5, 'center_y':.85}
+                            size_hint: None, None
+                            size: "200dp", "200dp"
+                        MDLabel:
+                            text:app.user_bio
+                            pos_hint:{'center_x':.5, 'center_y':.73}
+                            halign:'center'
+                            bold:True
+                            font_name:'images/fonts/Gill Sans.otf'
+                            theme_text_color: "Custom"
+                            text_color: 78/255, 82/255, 84/255, 1
 
     MDScreen:
         name:'company'

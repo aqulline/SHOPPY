@@ -28,4 +28,7 @@ class Transfer:
                         'date': self.date,
                         'bio': 'Change Bio in Setting!',
                         'logo': Fe.Logos(Fe(), username),
+                        'following': '0',
+                        'birth-date': 'None',
+
                     })

@@ -27,7 +27,7 @@ Window.keyboard_anim_args = {"d": .2, "t": "linear"}
 Window.softinput_mode = "below_target"
 
 if utils.platform != 'android':
-    Window.size = (360, 640)
+    Window.size = (412, 732)
 
 
 class Spin(MDBoxLayout):
@@ -119,6 +119,8 @@ class MainApp(MDApp):
     user_following = []
     user_orders = []
     user_products = []
+    user_details = []
+    user = []
     user_bio = StringProperty('')
     user_logo = StringProperty('')
     user_login = NumericProperty(0)
@@ -142,7 +144,7 @@ class MainApp(MDApp):
         button.md_bg_color = 83 / 225, 186 / 225, 115 / 225, 1
 
         button1 = self.root.ids.follow
-        button1.md_bg_color = 78/255, 82/255, 84/255, 1
+        button1.md_bg_color = 78 / 255, 82 / 255, 84 / 255, 1
 
         button2 = self.root.ids.b_register
         button2.md_bg_color = 83 / 225, 186 / 225, 115 / 225, 1
@@ -219,8 +221,6 @@ class MainApp(MDApp):
     def refresh(self):
         self.alert_dismiss()
         self.food_caller()
-
-
 
     def hook_keyboard(self, window, key, *largs):
         print(self.screens_size)
@@ -466,6 +466,34 @@ class MainApp(MDApp):
             ui.write(name)
         fl.close()
         ui.close()
+
+    user_counter = 0
+
+    def profile_caller(self):
+        if self.user_counter == 0:
+            self.user_counter = self.user_counter + 1
+            self.spin_dialog()
+            Clock.schedule_once(lambda x: self.user_profile(), 5)
+
+    def user_profile(self):
+        """
+                        bio:
+                        course:
+                        date:
+                        logo:
+                        phone:
+                        user_name:
+        """
+        file = open('credential/admin.txt', 'r')
+        line = file.readlines()
+        self.user_phone = line[0].strip()
+        self.user_details = FE.Profile(FE(), self.user_phone)
+        self.user_phone = self.user_details['phone']
+        self.user_name = self.user_details['user_name']
+        self.user_logo = self.user_details['logo']
+        self.user_bio = self.user_details['bio']
+        self.spin_dismiss()
+
 
     """ DOWN HERE STAYS USER ASSOCIATION FUNCTIONS"""
 
