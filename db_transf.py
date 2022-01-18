@@ -8,6 +8,7 @@ class Transfer:
     date, time = current_time.strip().split()
     week_day = ""
     day = ""
+    point = '1'
     orders = '1'
     number = 0
     order_id = '123'
@@ -62,11 +63,16 @@ class Transfer:
                 "time": self.time,
                 "date": self.date
             })
+            self.order_point(phone, amount)
             self.day_calc()
             refe = db.reference('Shoppy').child('Company').child(company).child("statistics"). \
                 child(self.day).child(product_name)
             refe.set({
                 "orders": self.orders
+            })
+            refp = db.reference('Shoppy').child("Users").child(phone).child('point')
+            refp.set({
+                "point": self.point
             })
 
     def orders_calc(self, company, name):
@@ -89,6 +95,25 @@ class Transfer:
                 print(self.orders)
             except:
                 self.orders = '1'
+
+    def order_point(self, phone, price):
+        if True:
+            import firebase_admin
+            firebase_admin._apps.clear()
+            from firebase_admin import credentials, initialize_app, db
+            if not firebase_admin._apps:
+                cred = credentials.Certificate("credential/farmzon-abdcb-c4c57249e43b.json")
+                initialize_app(cred, {'databaseURL': 'https://farmzon-abdcb.firebaseio.com/'})
+
+            print('order fucker')
+            try:
+                print("fucking points")
+                point = int(amount) * (1 / 100)
+                ref = db.reference('Shoppy').child("Users").child(phone).child('point')
+                points = ref.get()
+                self.point = int(points['point']) + point
+            except:
+                self.point = str(int(amount) * (1 / 100))
 
     def day_calc(self):
         today = str(datetime.date.today())

@@ -123,6 +123,7 @@ class MainApp(MDApp):
     user_location = StringProperty('')
     user_amount = StringProperty('')
     user_following = []
+    user_point = StringProperty('0')
     user_orders = []
     user_products = []
     user_details = []
@@ -154,6 +155,9 @@ class MainApp(MDApp):
 
         button2 = self.root.ids.b_register
         button2.md_bg_color = 83 / 225, 186 / 225, 115 / 225, 1
+
+        button3 = self.root.ids.bp
+        button3.md_bg_color = 78/255, 82/255, 84/255, 1
 
     def spin_dialog(self):
         if not self.dialog_spin:
@@ -206,6 +210,10 @@ class MainApp(MDApp):
             "class one",
             "class two",
             "class three",
+            "class four",
+            "class five",
+            "class six",
+            "class seven",
             "Aviation classes"
         ]
         for i in vimbweta:
@@ -325,8 +333,9 @@ class MainApp(MDApp):
         self.company_product(instance)
 
     def food_caller(self):
-        self.spin_dialog()
-        Clock.schedule_once(lambda x: self.Food(), 4)
+        pass
+        #self.spin_dialog()
+        #Clock.schedule_once(lambda x: self.Food(), 4)
 
     def Food(self):
         """
@@ -499,6 +508,8 @@ class MainApp(MDApp):
         self.user_name = self.user_details['user_name']
         self.user_logo = self.user_details['logo']
         self.user_bio = self.user_details['bio']
+        point = self.user_details["point"]
+        self.user_point = str(point['point'])
         self.spin_dismiss()
 
 

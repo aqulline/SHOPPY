@@ -138,7 +138,7 @@ ScreenManager:
                 MDBottomNavigationItem:
                     name: 'account'
                     text: 'Profile'
-                    icon:
+                    icon:"account-cowboy-hat"
                     on_enter:
                         app.profile_caller()
                     FloatLayout:
@@ -180,6 +180,67 @@ ScreenManager:
                             font_name:'images/fonts/Gill Sans.otf'
                             theme_text_color: "Custom"
                             text_color: 78/255, 82/255, 84/255, 1
+                        MDLabel:
+                            text:app.user_point + '/BP'
+                            pos_hint:{'center_x':.5, 'center_y':.6}
+                            halign:'center'
+                            bold:True
+                            font_size: "50sp"
+                            font_name:'images/fonts/Gill Sans.otf'
+                            theme_text_color: "Custom"
+                            text_color: 78/255, 82/255, 84/255, 1
+                        MDRaisedButton:
+                            id:bp
+                            text: "Use buying point"
+                            pos_hint:{'center_x': .5, 'center_y': .5}
+                            font_size: "18sp"
+                            theme_text_color: "Custom"
+                            text_color: 1, 1, 1, .9
+                            font_name: "images/fonts/Gill Sans.otf"
+                            md_bg_color:78/255, 82/255, 84/255, 1
+                        MDCard:
+                            orientation: "vertical"
+                            md_bg_color: 78/255, 82/255, 84/255, 1
+                            padding: "10dp"
+                            #spacing: "5dp"
+                            border_radius: 20
+                            border_color_a: 0
+                            radius: [90]
+                            size_hint: None, None
+                            size: app.size_x/2.8, app.size_y/5
+                            focus_behavior: False
+                            ripple_behavior: True
+                            elevation: 0.1
+                            pos_hint:{"center_x":.25, "center_y":.25}
+                            MDLabel:
+                                text:"Following"
+                                halign:"center"
+                                font_size:"25sp"
+                                theme_text_color: "Custom"
+                                text_color: 1, 1, 1, .9
+                                font_name:'images/fonts/Gill Sans.otf'
+                        MDCard:
+                            orientation: "vertical"
+                            md_bg_color: 78/255, 82/255, 84/255, 1
+                            padding: "10dp"
+                            #spacing: "5dp"
+                            border_radius: 20
+                            border_color_a: 0
+                            radius: [90]
+                            size_hint: None, None
+                            size: app.size_x/2.8, app.size_y/5
+                            focus_behavior: False
+                            ripple_behavior: True
+                            elevation: 0.1
+                            pos_hint:{"center_x":.73, "center_y":.25}
+                            MDLabel:
+                                text:"Recent"
+                                halign:"center"
+                                font_size:"25sp"
+                                theme_text_color: "Custom"
+                                text_color: 1, 1, 1, .9
+                                font_name:'images/fonts/Gill Sans.otf'
+
 
     MDScreen:
         name:'company'
@@ -332,13 +393,15 @@ ScreenManager:
                     on_press:
                         app.screen_leave()
                 MDLabel:
-                    text:"[ref app.company_screen(app.company_phone)] app.company_name [/ref]"
+                    text:f"[ref=hello]" + app.company_name + "[/ref]"
                     halign:'center'
                     bold:True
                     markup:True
                     font_name:'images/fonts/Gill Sans.otf'
                     theme_text_color: "Custom"
                     text_color: 78/255, 82/255, 84/255, 1
+                    on_ref_press:
+                        app.company_screen(app.company_phone)
                     #font_style:"Subtitle1"
             MDCarousel:
                 id:image_slide
@@ -603,11 +666,3 @@ ScreenManager:
         md_bg_color: 83 / 225, 186 / 225, 115 / 225, 1
         on_release:
             app.order_caller()
-
-
-
-
-
-
-
-
