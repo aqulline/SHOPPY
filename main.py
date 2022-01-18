@@ -34,6 +34,10 @@ class Spin(MDBoxLayout):
     pass
 
 
+class Order(MDBoxLayout):
+    pass
+
+
 class Alert(MDBoxLayout):
     pass
 
@@ -73,10 +77,12 @@ class MainApp(MDApp):
     # dialog's
     dialog_spin = None
     alert_dialog = None
+    order_dialog = None
 
     # business
-    quantity = StringProperty('0')
+    quantity = StringProperty('1')
     location = StringProperty("Choose location")
+    amount = StringProperty("")
     company_name = StringProperty('')
     company_bio = StringProperty('')
     company_followers = StringProperty('')
@@ -163,7 +169,8 @@ class MainApp(MDApp):
         if not self.alert_dialog:
             self.alert_dialog = MDDialog(
                 type='custom',
-                size_hint=(.55, None),
+                auto_dismiss=False,
+                size_hint=(.4, None),
                 content_cls=Alert()
             )
         self.alert_dialog.open()
@@ -495,7 +502,51 @@ class MainApp(MDApp):
         self.spin_dismiss()
 
 
-    """ DOWN HERE STAYS USER ASSOCIATION FUNCTIONS"""
+    """ UP HERE STAYS USER ASSOCIATION FUNCTIONS"""
+
+    """ORDER FUNCTIONS STAYS DOWN HERE"""
+    def dialog_order(self):
+        if not self.order_dialog:
+            self.order_dialog = MDDialog(
+                title="Invoice Confirmation",
+                type="custom",
+                auto_dismiss=False,
+                content_cls=Order(),
+            )
+        self.order_dialog.open()
+
+    def order_dismiss(self):
+        self.order_dialog.dismiss()
+
+    def call_order(self):
+        company = self.company_phone
+        product_name = self.product_name
+        quantity = self.quantity
+        location = self.location
+        phone = self.user_phone
+        self.amount = str(int(quantity) * int(self.product_price))
+        self.amount = str('{:,}'.format(int(self.amount)))
+        self.dialog_order()
+
+    def order_caller(self):
+        self.order_dismiss()
+        toast("please wait..")
+        Clock.schedule_once(lambda x: self.order(), .9)
+
+    def order(self):
+        from db_transf import Transfer as TF
+        company = self.company_phone
+        product_name = self.product_name
+        quantity = self.quantity
+        location = self.location
+        phone = self.user_phone
+        self.amount = str(int(quantity) * int(self.product_price))
+
+        TF.Order(TF(), company, phone, location, quantity, self.amount, product_name)
+        toast("Ordered successfully!")
+
+
+    """ORDER FUNCTIONS STAYS UP HERE"""
 
     def test(self):
         for i in range(9):

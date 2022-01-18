@@ -78,10 +78,10 @@ class Transfer:
                 cred = credentials.Certificate("credential/farmzon-abdcb-c4c57249e43b.json")
                 initialize_app(cred, {'databaseURL': 'https://farmzon-abdcb.firebaseio.com/'})
 
-            print('now crash you fucker')
+            print('now i am fuckn working')
             self.day_calc()
             try:
-                print("Hell no")
+                print("Another way")
                 ref = db.reference('Shoppy').child('Company').child(company).child('statistics').child(self.day).child(
                     name).child('orders')
                 self.orders = str(ref.get())
@@ -109,6 +109,6 @@ class Transfer:
         self.order_id = new_id
 
 
-company, phone, location, quantity, amount, product_name = '0687863886', '0788204327', 'arusha', '5', '200', 'dildo'
+#company, phone, location, quantity, amount, product_name = '0687863886', '0788204327', 'arusha', '5', '200', 'dildo'
 
-Transfer.Order(Transfer(), company, phone, location, quantity, amount, product_name)
+#Transfer.Order(Transfer(), company, phone, location, quantity, amount, product_name)

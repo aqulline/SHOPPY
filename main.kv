@@ -313,8 +313,6 @@ ScreenManager:
         MDBoxLayout:
             orientation:'vertical'
             MDCard:
-                on_release:
-                    app.company_screen(app.company_phone)
                 md_bg_color: 1, 1, 1, 1
                 padding: "10dp"
                 #spacing: "5dp"
@@ -325,7 +323,7 @@ ScreenManager:
                 size: app.size_x/1, app.size_y/9
                 pos_hint:{'center_x':.5, 'center_y':.85}
                 focus_behavior: False
-                ripple_behavior: True
+                ripple_behavior: False
                 elevation: 0.1
                 MDIconButton:
                     icon:'chevron-left'
@@ -334,9 +332,10 @@ ScreenManager:
                     on_press:
                         app.screen_leave()
                 MDLabel:
-                    text:app.company_name
+                    text:"[ref app.company_screen(app.company_phone)] app.company_name [/ref]"
                     halign:'center'
                     bold:True
+                    markup:True
                     font_name:'images/fonts/Gill Sans.otf'
                     theme_text_color: "Custom"
                     text_color: 78/255, 82/255, 84/255, 1
@@ -426,6 +425,8 @@ ScreenManager:
                         pos_hint:{'center_x': .5, 'center_y': .19}
                         font_size: "18sp"
                         font_name: "images/fonts/Gill Sans.otf"
+                        on_release:
+                            app.call_order()
 
     MDScreen:
         name:'register'
@@ -530,8 +531,9 @@ ScreenManager:
     adaptive_height: True
     spacing: dp(5)
     MDLabel:
-        text:'Connection Problem!'
+        text:'No internet!'
         bold:True
+        halign:'center'
         font_name:'images/fonts/Gill Sans.otf'
         theme_text_color: "Custom"
         text_color:78/255, 82/255, 84/255, 1
@@ -541,7 +543,71 @@ ScreenManager:
         adaptive_height: True
         MDIconButton:
             icon:'chevron-left'
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            on_release:
+                app.alert_dismiss()
+                app.screen_leave()
         MDIconButton:
             icon:'refresh'
+            pos_hint: {'center_x': .8, 'center_y': .5}
             on_release:
                 app.refresh()
+
+<Order>:
+    orientation:"vertical"
+    height: "350dp"
+    width:"99dp"
+    spacing: "12dp"
+    size_hint_y: None
+    MDLabel:
+        text:"Phone:"+" "+app.user_phone
+        bold:True
+        font_name:'images/fonts/Gill Sans.otf'
+        theme_text_color: "Custom"
+        text_color:78/255, 82/255, 84/255, 1
+        pos_hint: {'center_x': .5, 'center_y': 1}
+    MDLabel:
+        text:"Quantity:"+" "+app.quantity
+        bold:True
+        font_name:'images/fonts/Gill Sans.otf'
+        theme_text_color: "Custom"
+        text_color:78/255, 82/255, 84/255, 1
+        pos_hint: {'center_x': .5, 'center_y': 1}
+    MDLabel:
+        text:"Amount:"+" "+app.amount
+        bold:True
+        font_name:'images/fonts/Gill Sans.otf'
+        theme_text_color: "Custom"
+        text_color:78/255, 82/255, 84/255, 1
+        pos_hint: {'center_x': .5, 'center_y': 1}
+    MDLabel:
+        text:"Location:"+" "+app.location
+        bold:True
+        font_name:'images/fonts/Gill Sans.otf'
+        theme_text_color: "Custom"
+        text_color:78/255, 82/255, 84/255, 1
+        pos_hint: {'center_x': .5, 'center_y': 1}
+    MDRaisedButton:
+        text: "cancel"
+        pos_hint:{'center_x': .1, 'center_y': .1}
+        font_size: "18sp"
+        font_name: "images/fonts/Gill Sans.otf"
+        md_bg_color: 1, 1, 1, 1
+        on_release:
+            app.order_dismiss()
+    MDRaisedButton:
+        text: "confirm"
+        pos_hint:{'center_x': .8, 'center_y': .1}
+        font_size: "18sp"
+        font_name: "images/fonts/Gill Sans.otf"
+        md_bg_color: 83 / 225, 186 / 225, 115 / 225, 1
+        on_release:
+            app.order_caller()
+
+
+
+
+
+
+
+

@@ -7,7 +7,7 @@ title = Shoppy
 package.name = shoppy
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = alpha.shoppy.com
+package.domain = com.alpha
 
 # (str) Source code where the main.py live
 source.dir = .
