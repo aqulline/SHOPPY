@@ -201,7 +201,6 @@ class Upload_Data:
                     }
                 )
 
-
     def id_generator(self):
         not_allowed = ".-:"
         date1 = datetime.datetime.now()
@@ -220,20 +219,19 @@ class Upload_Data:
 # Upload_Data.letters(Upload_Data())
 
 
-# bio = 'fata mambo yako'
+# bio = 'fuck yah'
 # followers = '0'
 # following = '0'
-# logo = '/home/alpha/Downloads/dk.png'
+# logo = '/home/alpha/Downloads/masai.png'
 # stock = '7'
 # bought = '3'
-# image_path = ['/home/alpha/Pictures/shoppy_img/pic2.jpeg', '/home/alpha/Pictures/shoppy_img/pic1.jpeg',
-#              '/home/alpha/Pictures/shoppy_img/pic3.jpeg',
-#              '/home/alpha/Pictures/shoppy_img/pic4.jpg']
+# image_path = ['/home/alpha/Pictures/shoppy_img/pic4.jpg', '/home/alpha/Pictures/shoppy_img/pic2.jpeg',
+#              '/home/alpha/Pictures/shoppy_img/pic1.jpeg', '/home/alpha/Pictures/shoppy_img/pic3.jpeg', ]
 # Upload_Data.upload_product_image(Upload_Data(), "customer", "Food",
-#                                 image_path, "0687863886", "0734794026", "Zawadi kamote", "10000", "Perfumes", "1010",
+#                                 image_path, "0789181532", "0767290476", "Vanessa", "1000", "ndizi", "9090",
 #                                 Upload_Data.id_generator(
 #                                     Upload_Data()),
-#                                 "Black opium ml50, blue princess ml100, locasit ml100, boss ml100, bei @10k~12/=",
+#                                 "Pata ndizi matamu sana!",
 #                                 bio, followers, following, logo, stock, bought)
-#
+
 # Upload_Data.register_admin(Upload_Data(), "0788204327", "machungwa", "120", "nyanya", "juice.png", "906070")

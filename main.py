@@ -8,6 +8,7 @@ from kivy.properties import NumericProperty, StringProperty
 from kivy.uix.image import AsyncImage
 from kivymd.app import MDApp
 from kivy.core.window import Window
+from kivymd.uix.textfield import MDTextField
 from kivymd.toast import toast
 from kivymd.uix.bottomsheet import MDListBottomSheet
 from kivy.base import EventLoop
@@ -15,6 +16,7 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
 from kivy import utils
 import phonenumbers
+from kivymd.uix.list import OneLineIconListItem, ILeftBody
 from phonenumbers import carrier
 from phonenumbers.phonenumberutil import number_type
 from kivymd.uix.dialog import MDDialog
@@ -28,6 +30,15 @@ Window.softinput_mode = "below_target"
 
 if utils.platform != 'android':
     Window.size = (412, 732)
+
+
+class ImagelftWidgt(ILeftBody, AsyncImage):
+    pass
+
+
+class CustomOneLineIconListItem(OneLineIconListItem, AsyncImage):
+    icon = StringProperty()
+    phone = StringProperty
 
 
 class Spin(MDBoxLayout):
@@ -157,7 +168,10 @@ class MainApp(MDApp):
         button2.md_bg_color = 83 / 225, 186 / 225, 115 / 225, 1
 
         button3 = self.root.ids.bp
-        button3.md_bg_color = 78/255, 82/255, 84/255, 1
+        button3.md_bg_color = 78 / 255, 82 / 255, 84 / 255, 1
+
+        spin = self.root.ids.spin
+        spin.color = 78 / 255, 82 / 255, 84 / 255, 1
 
     def spin_dialog(self):
         if not self.dialog_spin:
@@ -333,9 +347,8 @@ class MainApp(MDApp):
         self.company_product(instance)
 
     def food_caller(self):
-        pass
-        #self.spin_dialog()
-        #Clock.schedule_once(lambda x: self.Food(), 4)
+        self.spin_dialog()
+        Clock.schedule_once(lambda x: self.Food(), 4)
 
     def Food(self):
         """
@@ -394,10 +407,6 @@ class MainApp(MDApp):
 
             '''
 
-    ''''
-                DOWN HERE STAYS ONLY TESTING FUNCTIONS
-    
-    '''
 
     """ DOWN HERE STAYS USER ASSOCIATION FUNCTIONS"""
 
@@ -442,7 +451,8 @@ class MainApp(MDApp):
 
     def call_look(self):
         self.spin_dialog()
-        Clock.schedule_once(lambda x: self.look_up(), 5)
+        self.spin_dismiss()
+        Clock.schedule_once(lambda x: self.look_up(), 6)
 
     def look_up(self):
         sm = self.root
@@ -503,19 +513,31 @@ class MainApp(MDApp):
         file = open('credential/admin.txt', 'r')
         line = file.readlines()
         self.user_phone = line[0].strip()
-        self.user_details = FE.Profile(FE(), self.user_phone)
-        self.user_phone = self.user_details['phone']
-        self.user_name = self.user_details['user_name']
-        self.user_logo = self.user_details['logo']
-        self.user_bio = self.user_details['bio']
-        point = self.user_details["point"]
-        self.user_point = str(point['point'])
-        self.spin_dismiss()
+        try:
+            self.user_details = FE.Profile(FE(), self.user_phone)
+            self.user_phone = self.user_details['phone']
+            self.user_name = self.user_details['user_name']
+            self.user_logo = self.user_details['logo']
+            self.user_bio = self.user_details['bio']
+            point = self.user_details["point"]
+            self.user_point = str(point['point'])
+            self.spin_dismiss()
+        except:
+            self.spin_dismiss()
+            toast('Opps!, No internet')
 
+    """
+     
+    UP HERE STAYS USER ASSOCIATION FUNCTIONS
+    
+    """
 
-    """ UP HERE STAYS USER ASSOCIATION FUNCTIONS"""
+    """
+    
+    ORDER FUNCTIONS STAYS DOWN HERE
+    
+    """
 
-    """ORDER FUNCTIONS STAYS DOWN HERE"""
     def dialog_order(self):
         if not self.order_dialog:
             self.order_dialog = MDDialog(
@@ -556,8 +578,49 @@ class MainApp(MDApp):
         TF.Order(TF(), company, phone, location, quantity, self.amount, product_name)
         toast("Ordered successfully!")
 
-
     """ORDER FUNCTIONS STAYS UP HERE"""
+
+    """
+                            DOWN HERE STAYS ONLY SEARCH RELATED FUNCTION
+    """
+
+    def set_list_customer_name(self, text="", search=False):
+
+        def add_customer_item(name, image, phone):
+            self.root.ids.customers.data.append(
+                {
+                    "viewclass": "CustomOneLineIconListItem",
+                    "icon": image,
+                    "phone": phone,
+                    "text": name,
+                }
+            )
+
+        def searching():
+            phones = FE.search(FE(), text)
+            for x, y in phones.items():
+                add_customer_item(y['customer_name'], y['logo'], x)
+            spinner.active = False
+            name.disabled = False
+
+        temp = []
+        self.root.ids.customers.data = []
+        spinner = self.root.ids.spin
+        name = self.root.ids.searchText
+        if search:
+            name.disabled = True
+            spinner.active = True
+            thread = threading.Thread(target=searching)
+            thread.start()
+    """
+                            UP HERE STAYS ONLY SEARCH RELATED FUNCTION
+    """
+
+
+    ''''
+                DOWN HERE STAYS ONLY TESTING FUNCTIONS
+
+    '''
 
     def test(self):
         for i in range(9):

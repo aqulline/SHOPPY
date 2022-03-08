@@ -125,6 +125,24 @@ class Fetch:
                 print('No Internet!')
                 return "No Internet!"
 
+    def search(self, text):
+        import firebase_admin
+        firebase_admin._apps.clear()
+        from firebase_admin import credentials, initialize_app, db
+        if not firebase_admin._apps:
+            try:
+                cred = credentials.Certificate("credential/farmzon-abdcb-c4c57249e43b.json")
+                initialize_app(cred, {'databaseURL': 'https://farmzon-abdcb.firebaseio.com/'})
+                store = db.reference("Shoppy").child("Company")
+                text = text.capitalize()
+                searched = store.order_by_child("customer_name").start_at(text).get()
+            except:
+                print('No Internet!')
+                return "No Internet!"
+            return searched
+
+
+# Fetch.search(Fetch(),'a')
 # Fetch.Logos(Fetch(), 'beast')
 # Fetch.company_stiller(Fetch(), '0687863886')
 # Fetch.company_products(Fetch(), '0687863886')

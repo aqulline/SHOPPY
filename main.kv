@@ -4,7 +4,7 @@ ScreenManager:
     transition:sm.FadeTransition(duration=.0)
 
     MDScreen:
-        radius: [25, 25, 25, 25]
+        #radius: [25, 25, 25, 25]
         md_bg_color:83 / 225, 186 / 225, 115 / 225, 1
         MDBoxLayout:
             orientation:'vertical'
@@ -18,6 +18,13 @@ ScreenManager:
                 font_name:'images/fonts/Gill Sans Bold.otf'
                 theme_text_color: "Custom"
                 text_color: 1, 1, 1, 1
+            MDSpinner:
+                id:spin
+                size_hint: None, None
+                size: dp(50), dp(50)
+                pos_hint: {'center_x': .5, 'center_y': 1}
+                active: True
+                color: 1,1,1,1
             MDLabel:
                 text:'Welcome!'
                 halign:'center'
@@ -28,7 +35,6 @@ ScreenManager:
                 font_name:'images/fonts/Gill Sans Bold.otf'
                 theme_text_color: "Custom"
                 text_color: 1, 1, 1, 1
-
 
     MDScreen:
         md_bg_color: 245/255, 245/255, 245/255, 1
@@ -77,7 +83,7 @@ ScreenManager:
                 size: app.size_x/2, app.size_y/8.5
                 orientation:'vertical'
                 on_release:
-                    manager.current = 'request'
+                    app.screen_capture('request')
                 MDIcon:
                     icon:"phone"
                     halign:"center"
@@ -107,7 +113,7 @@ ScreenManager:
                 MDBottomNavigationItem:
                     name: 'home'
                     text: 'Home'
-                    icon: 'home-outline'
+                    icon: 'home'
                     MDBoxLayout:
                         orientation:'vertical'
                         MDToolbar:
@@ -127,13 +133,47 @@ ScreenManager:
                                     id:front_shop
 
                 MDBottomNavigationItem:
-                    name: 'orders'
-                    text: 'Orders'
-                    icon: 'format-list-bulleted'
+                    name: 'search'
+                    text: 'Discover'
+                    icon: 'shopping-search'
+                    MDBoxLayout:
+                        orientation:'vertical'
+                        Labels:
+                            text:'Search for company'
+                            halign:'center'
+                            bold:True
+                            font_size: "25sp"
+                        MDTextFieldRound:
+                            id:searchText
+                            pos_hint:{"center_x":.5, "center_y":.48}
+                            size_hint: .8,.054
+                            hint_text:"search"
+                            line_color:app.theme_cls.primary_color
+                            normal_color: 0.5,0.5,0.5,0.5
+                            #icon_left:"magnify"
+                            icon_left_color:app.theme_cls.primary_color
+                            color_active:1, 1, 1, 1
+                            on_text:
+                                app.set_list_customer_name(searchText.text, True)
+                        MDSpinner:
+                            id:spin
+                            size_hint: None, None
+                            size: dp(20), dp(20)
+                            pos_hint: {'center_x': .5, 'center_y': 1}
+                            active: False
+                            color: 1,1,1,1
 
-                    MDLabel:
-                        text: 'Python'
-                        halign: 'center'
+                        RecycleView:
+                            id: customers
+                            key_viewclass: 'viewclass'
+                            key_size: 'height'
+                            RecycleBoxLayout:
+                                padding: dp(10)
+                                default_size: None, dp(48)
+                                default_size_hint: 1, None
+                                size_hint_y: None
+                                height: self.minimum_height
+                                orientation: 'vertical'
 
                 MDBottomNavigationItem:
                     name: 'account'
@@ -533,6 +573,9 @@ ScreenManager:
                     app.validate_user(number.text, username.text)
 
 
+                                                            #   MY OWN WIDGETS
+
+
 <Shops@MDCard>:
     orientation: "vertical"
     md_bg_color: 1, 1, 1, 1
@@ -579,7 +622,7 @@ ScreenManager:
         size: dp(25), dp(25)
         pos_hint: {'center_x': .5, 'center_y': 1}
         active: True
-        color: 83/225, 186/225, 115/225, 1
+        color: 78 / 255, 82 / 255, 84 / 255, 1
     MDLabel:
         text:'Loading...'
         bold:True
@@ -666,3 +709,11 @@ ScreenManager:
         md_bg_color: 83 / 225, 186 / 225, 115 / 225, 1
         on_release:
             app.order_caller()
+
+<CustomOneLineIconListItem>:
+
+    on_release:
+        app.company_screen(root.phone)
+
+    ImagelftWidgt:
+        source: root.icon

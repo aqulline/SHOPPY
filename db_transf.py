@@ -108,12 +108,12 @@ class Transfer:
             print('order fucker')
             try:
                 print("fucking points")
-                point = int(amount) * (1 / 100)
+                point = int(price) * (1 / 100)
                 ref = db.reference('Shoppy').child("Users").child(phone).child('point')
                 points = ref.get()
                 self.point = int(points['point']) + point
             except:
-                self.point = str(int(amount) * (1 / 100))
+                self.point = str(int(price) * (1 / 100))
 
     def day_calc(self):
         today = str(datetime.date.today())
