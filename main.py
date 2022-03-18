@@ -119,6 +119,7 @@ class MainApp(MDApp):
     # Temporary
     t_company_products = []
     t_company_product = []
+    company_instances = []
     t_product_name = StringProperty('')
     t_product_price = StringProperty('')
     t_Product_title = StringProperty('')
@@ -127,6 +128,10 @@ class MainApp(MDApp):
     t_product_description = StringProperty('')
     t_product_image = StringProperty('')
     t_price_comma = StringProperty('')
+
+    # ONCE counter's
+    food_counter = NumericProperty(0)
+    profile_counter = NumericProperty(0)
 
     # user
     user_name = StringProperty('')
@@ -172,6 +177,9 @@ class MainApp(MDApp):
 
         spin = self.root.ids.spin
         spin.color = 78 / 255, 82 / 255, 84 / 255, 1
+
+        spine = self.root.ids.spine
+        spine.color = 78 / 255, 82 / 255, 84 / 255, 1
 
     def spin_dialog(self):
         if not self.dialog_spin:
@@ -290,8 +298,15 @@ class MainApp(MDApp):
 
     def company_screen(self, instance):
         self.screen_capture('company')
+        self.company_instances.append(instance)
+        self.clear_company()
         self.spin_dialog()
         Clock.schedule_once(lambda x: self.company(instance), 4)
+
+    def clear_company(self):
+        parent = self.root.ids.cproducts
+        for child in parent.children:
+            parent.remove_widget(child)
 
     def keyboard_hooker(self):
         EventLoop.window.bind(on_keyboard=self.hook_keyboard)
@@ -347,8 +362,12 @@ class MainApp(MDApp):
         self.company_product(instance)
 
     def food_caller(self):
-        self.spin_dialog()
-        Clock.schedule_once(lambda x: self.Food(), 4)
+        if self.food_counter == 0:
+            self.spin_dialog()
+            self.food_counter = 1
+            Clock.schedule_once(lambda x: self.Food(), 4)
+        else:
+            pass
 
     def Food(self):
         """
@@ -574,7 +593,7 @@ class MainApp(MDApp):
         location = self.location
         phone = self.user_phone
         self.amount = str(int(quantity) * int(self.product_price))
-
+        self.send_sms(phone, location, self.company_phone, product_name, quantity)
         TF.Order(TF(), company, phone, location, quantity, self.amount, product_name)
         toast("Ordered successfully!")
 
@@ -620,6 +639,19 @@ class MainApp(MDApp):
     ''''
                 DOWN HERE STAYS ONLY TESTING FUNCTIONS
 
+    '''
+
+    '''
+                DOWN HERE STAYS BEEM FUNCTIONS ONLY
+    '''
+
+    def send_sms(self, phone, location, phone_c, product_name, quantity):
+        from beem import sms as sm
+
+        sm.send_sms(phone, location, phone_c, product_name, quantity)
+
+    '''
+                UP HERE STAYS BEEM FUNCTIONS ONLY
     '''
 
     def test(self):
