@@ -8,7 +8,6 @@ from kivy.properties import NumericProperty, StringProperty
 from kivy.uix.image import AsyncImage
 from kivymd.app import MDApp
 from kivy.core.window import Window
-from kivymd.uix.textfield import MDTextField
 from kivymd.toast import toast
 from kivymd.uix.bottomsheet import MDListBottomSheet
 from kivy.base import EventLoop
@@ -112,9 +111,13 @@ class MainApp(MDApp):
     product_description = StringProperty('')
     product_image = StringProperty('')
     product_images = []
+
     # for food
     food_product = []
     food_products = []
+    market_product = []
+    market_products = []
+    category = StringProperty('')
 
     # Temporary
     t_company_products = []
@@ -128,6 +131,7 @@ class MainApp(MDApp):
     t_product_description = StringProperty('')
     t_product_image = StringProperty('')
     t_price_comma = StringProperty('')
+    user_date = StringProperty('22.6.2002')
 
     # ONCE counter's
     food_counter = NumericProperty(0)
@@ -143,7 +147,6 @@ class MainApp(MDApp):
     user_orders = []
     user_products = []
     user_details = []
-    user = []
     user_bio = StringProperty('')
     user_logo = StringProperty('')
     user_login = NumericProperty(0)
@@ -257,6 +260,7 @@ class MainApp(MDApp):
 
     def refresh(self):
         self.alert_dismiss()
+        self.food_counter = 0
         self.food_caller()
 
     def hook_keyboard(self, window, key, *largs):
@@ -318,8 +322,9 @@ class MainApp(MDApp):
 
     def image_slider(self):
         id = self.product_id
-        cate = 'Food'
+        cate = self.category
         slider = self.root.ids.image_slide
+        slider.clear_widgets()
         self.product_images = FE.image_stiller(FE(), id, cate)
         for i in self.product_images:
             slider.add_widget(AsyncImage(source=i))
@@ -361,15 +366,24 @@ class MainApp(MDApp):
         self.company_phone = self.company_details['customer_phone']
         self.company_product(instance)
 
+    def clear_products(self):
+        parent = self.root.ids.front_shop
+        counter = 0
+        parent.clear_widgets()
+        for child in parent.children:
+            counter += 1
+            print(counter)
+            parent.remove_widget(child)
+
     def food_caller(self):
         if self.food_counter == 0:
             self.spin_dialog()
             self.food_counter = 1
-            Clock.schedule_once(lambda x: self.Food(), 4)
+            Clock.schedule_once(lambda x: self.Food(self.category), 4)
         else:
             pass
 
-    def Food(self):
+    def Food(self, cate):
         """
                 company_name:
                 company_phone:
@@ -380,7 +394,7 @@ class MainApp(MDApp):
                 product_price:
                 stock:
                 """
-        self.food_product = FE.Product(FE(), 'Food')
+        self.food_product = FE.Product(FE(), cate)
         if self.food_product == "No Internet!":
             toast('Network problem!')
             self.spin_dismiss()
@@ -426,8 +440,9 @@ class MainApp(MDApp):
 
             '''
 
-
-    """ DOWN HERE STAYS USER ASSOCIATION FUNCTIONS"""
+    """ 
+    DOWN HERE STAYS USER ASSOCIATION FUNCTIONS
+    """
 
     def phone_number_check_admin(self, phone):
         new_number = ""
@@ -451,7 +466,6 @@ class MainApp(MDApp):
         from db_transf import Transfer as TR
         try:
             self.spin_dialog()
-            Clock.schedule_once(lambda x: self.Food(), 4)
             TR.register(TR(), phone, name)
             self.remember_me(phone, 'i am emma nyoo...', name)
             self.spin_dismiss()
@@ -545,6 +559,9 @@ class MainApp(MDApp):
             self.spin_dismiss()
             toast('Opps!, No internet')
 
+    def buying_point(self):
+        toast('If you reach 1000/bp contact us!')
+
     """
      
     UP HERE STAYS USER ASSOCIATION FUNCTIONS
@@ -597,7 +614,9 @@ class MainApp(MDApp):
         TF.Order(TF(), company, phone, location, quantity, self.amount, product_name)
         toast("Ordered successfully!")
 
-    """ORDER FUNCTIONS STAYS UP HERE"""
+    """
+    ORDER FUNCTIONS STAYS UP HERE
+    """
 
     """
                             DOWN HERE STAYS ONLY SEARCH RELATED FUNCTION
@@ -631,15 +650,10 @@ class MainApp(MDApp):
             spinner.active = True
             thread = threading.Thread(target=searching)
             thread.start()
+
     """
                             UP HERE STAYS ONLY SEARCH RELATED FUNCTION
     """
-
-
-    ''''
-                DOWN HERE STAYS ONLY TESTING FUNCTIONS
-
-    '''
 
     '''
                 DOWN HERE STAYS BEEM FUNCTIONS ONLY
@@ -652,6 +666,15 @@ class MainApp(MDApp):
 
     '''
                 UP HERE STAYS BEEM FUNCTIONS ONLY
+    '''
+
+    '''
+        DOWN HERE STAYS 
+    '''
+
+    ''''
+                DOWN HERE STAYS ONLY TESTING FUNCTIONS
+
     '''
 
     def test(self):
@@ -682,3 +705,6 @@ class MainApp(MDApp):
 
 
 MainApp().run()
+
+# info@warifng.org
+# +1 809-210-0008

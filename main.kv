@@ -42,6 +42,9 @@ ScreenManager:
             Shops:
                 pos_hint:{'center_x': .25, 'center_y':.65}
                 on_release:
+                    app.category = "Food"
+                    app.food_counter = 0
+                    app.clear_products()
                     app.screen_capture('food')
                 MDIcon:
                     icon:"food"
@@ -60,7 +63,10 @@ ScreenManager:
             Shops:
                 pos_hint:{'center_x': .75, 'center_y':.65}
                 on_release:
-                    app.screen_capture('market')
+                    app.category = "Market"
+                    app.food_counter = 0
+                    app.clear_products()
+                    app.screen_capture('food')
                 MDIcon:
                     icon:"shopping"
                     halign:"center"
@@ -116,7 +122,7 @@ ScreenManager:
                     MDBoxLayout:
                         orientation:'vertical'
                         MDToolbar:
-                            title: "Food and Drinks"
+                            title: app.category
                             elevation: 10
                             id:tool
                             left_action_items: [["chevron-left", lambda x: app.screen_leave()]]
@@ -127,7 +133,7 @@ ScreenManager:
                                 MDGridLayout:
                                     cols: 2
                                     adaptive_height: True
-                                    padding: dp(10), dp(4)
+                                    padding: dp(20), dp(20)
                                     spacing: dp(30)
                                     id:front_shop
 
@@ -182,38 +188,31 @@ ScreenManager:
                         app.profile_caller()
                     FloatLayout:
                         MDIconButton:
-                            icon:'chevron-left'
-                            theme_text_color: "Custom"
-                            pos_hint:{'center_x':.1, 'center_y':.95}
-                            text_color: 83 / 255, 186 / 255, 155 / 255, 1
-                            on_press:
-                                app.screen_leave()
-                        MDIconButton:
                             # image-filter-vintage
                             icon:'cog'
                             theme_text_color: "Custom"
                             pos_hint:{'center_x':.9, 'center_y':.95}
-                            text_color: 83 / 255, 186 / 255, 155 / 255, 1
+                            text_color: 78 / 255, 82 / 255, 84 / 255, 1
                             on_press:
-                                app.screen_leave()
+                                app.screen_capture('settings')
                         MDLabel:
                             text:app.user_name
                             pos_hint:{'center_x':.5, 'center_y':.95}
                             halign:'center'
                             font_style:'H6'
                             bold:True
-                            underline: True
-                            font_name:'images/fonts/Gill Sans.otf'
+                            font_size:"25sp"
+                            font_name:'images/fonts/Gill Sans Bold.otf'
                             theme_text_color: "Custom"
                             text_color: 78/255, 82/255, 84/255, 1
                         AsyncImage:
                             source:app.user_logo
-                            pos_hint:{'center_x':.5, 'center_y':.85}
+                            pos_hint:{'center_x':.5, 'center_y':.8}
                             size_hint: None, None
-                            size: "200dp", "200dp"
+                            size: "300dp", "300dp"
                         MDLabel:
                             text:app.user_bio
-                            pos_hint:{'center_x':.5, 'center_y':.73}
+                            pos_hint:{'center_x':.5, 'center_y':.63}
                             halign:'center'
                             bold:True
                             font_name:'images/fonts/Gill Sans.otf'
@@ -221,7 +220,7 @@ ScreenManager:
                             text_color: 78/255, 82/255, 84/255, 1
                         MDLabel:
                             text:app.user_point + '/BP'
-                            pos_hint:{'center_x':.5, 'center_y':.6}
+                            pos_hint:{'center_x':.5, 'center_y':.5}
                             halign:'center'
                             bold:True
                             font_size: "50sp"
@@ -231,54 +230,14 @@ ScreenManager:
                         MDRaisedButton:
                             id:bp
                             text: "Use buying point"
-                            pos_hint:{'center_x': .5, 'center_y': .5}
+                            pos_hint:{'center_x': .5, 'center_y': .38}
                             font_size: "18sp"
                             theme_text_color: "Custom"
                             text_color: 1, 1, 1, .9
                             font_name: "images/fonts/Gill Sans.otf"
                             md_bg_color:78/255, 82/255, 84/255, 1
-                        MDCard:
-                            orientation: "vertical"
-                            md_bg_color: 78/255, 82/255, 84/255, 1
-                            padding: "10dp"
-                            #spacing: "5dp"
-                            border_radius: 20
-                            border_color_a: 0
-                            radius: [90]
-                            size_hint: None, None
-                            size: app.size_x/2.8, app.size_y/5
-                            focus_behavior: False
-                            ripple_behavior: True
-                            elevation: 0.1
-                            pos_hint:{"center_x":.25, "center_y":.25}
-                            MDLabel:
-                                text:"Following"
-                                halign:"center"
-                                font_size:"25sp"
-                                theme_text_color: "Custom"
-                                text_color: 1, 1, 1, .9
-                                font_name:'images/fonts/Gill Sans.otf'
-                        MDCard:
-                            orientation: "vertical"
-                            md_bg_color: 78/255, 82/255, 84/255, 1
-                            padding: "10dp"
-                            #spacing: "5dp"
-                            border_radius: 20
-                            border_color_a: 0
-                            radius: [90]
-                            size_hint: None, None
-                            size: app.size_x/2.8, app.size_y/5
-                            focus_behavior: False
-                            ripple_behavior: True
-                            elevation: 0.1
-                            pos_hint:{"center_x":.73, "center_y":.25}
-                            MDLabel:
-                                text:"Recent"
-                                halign:"center"
-                                font_size:"25sp"
-                                theme_text_color: "Custom"
-                                text_color: 1, 1, 1, .9
-                                font_name:'images/fonts/Gill Sans.otf'
+                            on_release:
+                                app.buying_point()
 
 
     MDScreen:
@@ -529,6 +488,34 @@ ScreenManager:
                         font_name: "images/fonts/Gill Sans.otf"
                         on_release:
                             app.call_order()
+
+    MDScreen:
+        name:'settings'
+        FloatLayout:
+            MDIconButton:
+                icon:'arrow-left'
+                pos_hint:{'center_x':.08, "center_y":.95}
+                on_release:
+                    app.screen_leave()
+            Labels:
+                halign:'center'
+                pos_hint:{'center_x':.23, "center_y":.95}
+                text:'Settings'
+                size_hint:None, None
+                IconLeftWidget:
+                    icon: "account-circle-outline"
+            OneLineIconListItem:
+                text: "About"
+                pos_hint:{'center_x':.5, "center_y":.87}
+                IconLeftWidget:
+                    icon: "information-outline"
+            OneLineIconListItem:
+                text: "Help"
+                pos_hint:{'center_x':.5, "center_y":.81-0.01}
+                IconLeftWidget:
+                    icon: "parachute-outline"
+
+
 
     MDScreen:
         name:'register'

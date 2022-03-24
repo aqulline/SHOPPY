@@ -22,20 +22,26 @@ class Transfer:
                 cred = credentials.Certificate("credential/farmzon-abdcb-c4c57249e43b.json")
                 initialize_app(cred, {'databaseURL': 'https://farmzon-abdcb.firebaseio.com/'})
                 print("Starting deployment....", int(phone))
-                ref = db.reference('Shoppy').child("Users").child(phone)
-                print("horray!!!")
-                ref.set(
-                    {
-                        'user_name': username,
-                        'phone': phone,
-                        'course': 'None',
-                        'date': self.date,
-                        'bio': 'Change Bio in Setting!',
-                        'logo': Fe.Logos(Fe(), username),
-                        'following': '0',
-                        'birth-date': 'None',
 
-                    })
+                ref = db.reference('Shoppy').child('Users')
+                users = ref.get()
+                if phone in users:
+                    print('It there')
+                else:
+                    ref = db.reference('Shoppy').child("Users").child(phone)
+                    print("horray!!!")
+                    ref.set(
+                        {
+                            'user_name': username,
+                            'phone': phone,
+                            'course': 'None',
+                            'date': self.date,
+                            'bio': 'Change Bio in Setting!',
+                            'logo': Fe.Logos(Fe(), username),
+                            'following': '0',
+                            'birth-date': 'None',
+
+                        })
 
     def Order(self, company, phone, location, quantity, amount, product_name):
         if True:
@@ -137,3 +143,4 @@ class Transfer:
 #company, phone, location, quantity, amount, product_name = '0687863886', '0788204327', 'arusha', '5', '200', 'dildo'
 
 #Transfer.Order(Transfer(), company, phone, location, quantity, amount, product_name)
+Transfer.register(Transfer(),'0788204327', 'beast')

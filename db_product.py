@@ -216,22 +216,26 @@ class Upload_Data:
 
     print("Thanks!!!!")
 
+
 # Upload_Data.letters(Upload_Data())
 
 
-# bio = 'fuck yah'
-# followers = '0'
-# following = '0'
-# logo = '/home/alpha/Downloads/masai.png'
-# stock = '7'
-# bought = '3'
-# image_path = ['/home/alpha/Pictures/shoppy_img/pic4.jpg', '/home/alpha/Pictures/shoppy_img/pic2.jpeg',
-#              '/home/alpha/Pictures/shoppy_img/pic1.jpeg', '/home/alpha/Pictures/shoppy_img/pic3.jpeg', ]
-# Upload_Data.upload_product_image(Upload_Data(), "customer", "Food",
-#                                 image_path, "0789181532", "0767290476", "Vanessa", "1000", "ndizi", "9090",
+#bio = 'Nauza saa mbalimbali za kijanja'
+#followers = '4'
+#following = '0'
+#logo = '/home/alpha/Documents/Letters/A.png'
+#stock = '10'
+#bought = '3'
+#image_path = ['/home/alpha/Downloads/products/watch.jpg',
+#              '/home/alpha/Downloads/products/watch1.jpg',
+#              '/home/alpha/Downloads/products/watch3.jpg',
+#              '/home/alpha/Downloads/products/watch2.jpg']
+#
+#Upload_Data.upload_product_image(Upload_Data(), "customer", "Market",
+#                                 image_path, "0715700411", "0758758440", "Aqulline", "300", "Saa kali", "9060",
 #                                 Upload_Data.id_generator(
 #                                     Upload_Data()),
-#                                 "Pata ndizi matamu sana!",
+#                                 "Pata saa kali za ki gentelman!",
 #                                 bio, followers, following, logo, stock, bought)
 
 # Upload_Data.register_admin(Upload_Data(), "0788204327", "machungwa", "120", "nyanya", "juice.png", "906070")
