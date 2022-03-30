@@ -1,4 +1,9 @@
+import json
+
+
 class Fetch:
+    data = []
+
     def Product(self, category):
         """
         company_name:
@@ -108,6 +113,31 @@ class Fetch:
             except:
                 return "No Internet!"
 
+    def add_order(self, p_id, price, p_name, phone, date):
+        import json
+        cached = {p_id: {'phone': phone,
+                         'price': price,
+                         'productName': p_name,
+                         'date': date}}
+        self.data.append(cached)
+        z = self.load()
+        self.data.append(z)
+        d = {k: v for x in self.data for k, v in x.items()}
+        print(d)
+        file = open('data/order.json', 'w')
+        file.write(json.dumps(d))
+        file.close()
+
+    def load(self):
+        try:
+            file = open('data/order.json', 'r')
+            data = json.load(file)
+
+            return data
+        except:
+            data = {}
+            return data
+
     def Logos(self, name):
         letter = str(name[0]).capitalize()
         import firebase_admin
@@ -144,5 +174,8 @@ class Fetch:
 
 # Fetch.search(Fetch(),'a')
 # Fetch.Logos(Fetch(), 'beast')
-# Fetch.company_stiller(Fetch(), '0687863886')
+# x = Fetch.company_stiller(Fetch(), '0628834063')
 # Fetch.company_products(Fetch(), '0687863886')
+# Fetch.add_order(Fetch(), '00', '080', '9578', 'p[p[op', '090')
+# Fetch.load(Fetch())
+

@@ -90,13 +90,13 @@ ScreenManager:
                 on_release:
                     app.screen_capture('request')
                 MDIcon:
-                    icon:"phone"
+                    icon:"information-variant"
                     halign:"center"
                     pos_hint:{'center_x':.5, 'center_y': .6}
                     theme_text_color: "Custom"
                     text_color: 83/225, 186/225, 115/225, 1
                 MDLabel:
-                    text:"REQUEST!"
+                    text:"INFO!"
                     bold:True
                     halign:'center'
                     font_name:'images/fonts/Gill Sans Bold.otf'
@@ -266,40 +266,16 @@ ScreenManager:
                 size_hint: None, None
                 size: "200dp", "200dp"
             MDLabel:
-                text:app.company_bio
-                pos_hint:{'center_x':.5, 'center_y':.73}
-                halign:'center'
-                bold:True
-                font_name:'images/fonts/Gill Sans.otf'
-                theme_text_color: "Custom"
-                text_color: 78/255, 82/255, 84/255, 1
-            MDLabel:
-                text:'Followers'
-                pos_hint:{'center_x':.35, 'center_y':.68}
-                halign:'center'
-                bold:True
-                font_name:'images/fonts/Gill Sans.otf'
-                theme_text_color: "Custom"
-                text_color: 78/255, 82/255, 84/255, 1
-            MDLabel:
-                text:'Following'
-                pos_hint:{'center_x':.7, 'center_y':.68}
-                halign:'center'
-                bold:True
-                font_name:'images/fonts/Gill Sans.otf'
-                theme_text_color: "Custom"
-                text_color: 78/255, 82/255, 84/255, 1
-            MDLabel:
                 text:app.company_followers
-                pos_hint:{'center_x':.35, 'center_y':.63}
+                pos_hint:{'center_x':.5, 'center_y':.75}
                 halign:'center'
                 bold:True
-                font_name:'images/fonts/Gill Sans.otf'
+                font_name:'images/fonts/Gill Sans Bold.otf'
                 theme_text_color: "Custom"
                 text_color: 78/255, 82/255, 84/255, 1
             MDLabel:
-                text:app.company_following
-                pos_hint:{'center_x':.7, 'center_y':.63}
+                text:'Loyalties'
+                pos_hint:{'center_x':.5, 'center_y':.73}
                 halign:'center'
                 bold:True
                 font_name:'images/fonts/Gill Sans.otf'
@@ -307,12 +283,23 @@ ScreenManager:
                 text_color: 78/255, 82/255, 84/255, 1
             MDRaisedButton:
                 id:follow
-                text: "follow"
-                pos_hint:{'center_x': .53, 'center_y': .59}
-                font_size: "18sp"
+                text: "Loyal"
+                pos_hint:{'center_x': .5, 'center_y': .66}
+                font_size: "20sp"
                 theme_text_color: "Custom"
                 text_color: 1, 1, 1, .9
                 font_name: "images/fonts/Gill Sans.otf"
+                on_release:
+                    app.loyalty()
+            MDLabel:
+                text:app.company_bio
+                pos_hint:{'center_x':.5, 'center_y':.58}
+                halign:'center'
+                font_size: "18sp"
+                bold:True
+                font_name:'images/fonts/Gill Sans.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
             MDSeparator:
                 height: "4dp"
                 pos_hint:{'center_x': .5, 'center_y': .48}
@@ -355,16 +342,95 @@ ScreenManager:
 
     MDScreen:
         name:'request'
-        FloatLayout:
+        MDBoxLayout:
+            orientation:"vertical"
+            spacing: dp(-5)
             Shops:
-                pos_hint:{"center_x": .5, "center_y":.5}
-                MDLabel:
-                    text:"REQUEST"
-                    bold:True
-                    halign:'center'
-                    theme_text_color: "Custom"
-                    text_color: 1, 1, 1, 1
-                    halign:'center'
+                pos_hint:{"center_x": .5, "center_y":.87}
+                size: app.size_x-25, app.size_y/4.5
+                Image:
+                    height:self.texture_size[1]
+                    source:'images/icons/iconshoppy.png'
+            MDLabel:
+                text:"Hello" + " " + app.user_name
+                pos_hint:{'center_x':.5, 'center_y':.9}
+                height: self.texture_size[1]
+                halign:'center'
+                font_style:'H6'
+                bold:True
+                font_name:'images/fonts/Gill Sans Bold.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
+            MDLabel:
+                text:"Welcome to SHOPPY"
+                pos_hint:{'center_x':.5, 'center_y':.7}
+                height: self.texture_size[1]
+                halign:'center'
+                font_style:'Subtitle1'
+                bold:True
+                font_name:'images/fonts/Gill Sans Bold.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
+            MDLabel:
+                text:"Hapa ndio itakuwa sehemu ambayo utakuwa unapata habari, taarifa na matangazo mbalili kuhusu app hii"
+                pos_hint:{'center_x':.5, 'center_y':.65}
+                height: self.texture_size[1]
+                halign:'center'
+                font_style:'Body1'
+                bold:True
+                font_name:'images/fonts/Gill Sans.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
+            MDLabel:
+                text:"UZA NASI"
+                pos_hint:{'center_x':.13, 'center_y':.6}
+                height: self.texture_size[1]
+                halign:'center'
+                font_style:'Subtitle1'
+                bold:True
+                font_name:'images/fonts/Gill Sans Bold.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
+            MDLabel:
+                text:"1.Uwe na bidha yoyote"
+                pos_hint:{'center_x':.2, 'center_y':.55}
+                height: self.texture_size[1]
+                halign:'center'
+                font_style:'Subtitle1'
+                bold:True
+                font_name:'images/fonts/Gill Sans.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
+            MDLabel:
+                text:"2.Uwe na simu ya smartphone au simu ndogo"
+                pos_hint:{'center_x':.37, 'center_y':.5}
+                height: self.texture_size[1]
+                halign:'center'
+                font_style:'Subtitle1'
+                bold:True
+                font_name:'images/fonts/Gill Sans.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
+            MDLabel:
+                text:"3.Uwe Mwanafunzi wa chuo."
+                pos_hint:{'center_x':.25, 'center_y':.45}
+                height: self.texture_size[1]
+                halign:'center'
+                font_style:'Subtitle1'
+                bold:True
+                font_name:'images/fonts/Gill Sans.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
+            MDLabel:
+                text:"Phone:0715700411"
+                pos_hint:{'center_x':.5, 'center_y':.3}
+                height: self.texture_size[1]
+                halign:'center'
+                font_style:'Body2'
+                bold:True
+                font_name:'images/fonts/Gill Sans Bold.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
 
     MDScreen:
         name:'description'
@@ -501,21 +567,115 @@ ScreenManager:
                 halign:'center'
                 pos_hint:{'center_x':.23, "center_y":.95}
                 text:'Settings'
-                size_hint:None, None
-                IconLeftWidget:
-                    icon: "account-circle-outline"
             OneLineIconListItem:
                 text: "About"
                 pos_hint:{'center_x':.5, "center_y":.87}
+                on_release:
+                    app.screen_capture("about")
                 IconLeftWidget:
                     icon: "information-outline"
             OneLineIconListItem:
                 text: "Help"
                 pos_hint:{'center_x':.5, "center_y":.81-0.01}
+                on_release:
+                    app.screen_capture("help")
                 IconLeftWidget:
                     icon: "parachute-outline"
 
+    MDScreen:
+        name:'about'
+        FloatLayout:
+            MDIconButton:
+                icon:'arrow-left'
+                pos_hint:{'center_x':.08, "center_y":.95}
+                on_release:
+                    app.screen_leave()
+            MDLabel:
+                halign:'center'
+                pos_hint:{'center_x':.23, "center_y":.95}
+                text:'About'
+                size_hint:None, None
+            MDLabel:
+                halign:'center'
+                pos_hint:{'center_x':.5, "center_y":.8}
+                text:'ALPHA'
+                font_size: "18sp"
+                font_style:"H5"
+                bold:True
+                font_name: "images/fonts/Gill Sans Bold.otf"
+                size_hint:None, None
+            MDIcon:
+                icon:"instagram"
+                font_size: "30sp"
+                halign:"center"
+                pos_hint:{'center_x':.15, "center_y":.7}
+            MDLabel:
+                halign:'center'
+                pos_hint:{'center_x':.3, "center_y":.7}
+                text:'alpha.tech.co'
+                font_size: "30sp"
+                font_name: "images/fonts/Gill Sans.otf"
+                font_style:"Body2"
+                bold:True
+                size_hint:None, None
+            MDIcon:
+                icon:"whatsapp"
+                font_size: "30sp"
+                halign:"center"
+                pos_hint:{'center_x':.5, "center_y":.7}
+            MDLabel:
+                halign:'center'
+                pos_hint:{'center_x':.65, "center_y":.7}
+                text:'0786857974'
+                font_size: "30sp"
+                font_style:"Body2"
+                font_name: "images/fonts/Gill Sans.otf"
+                bold:True
+                size_hint:None, None
 
+    MDScreen:
+        name:'help'
+        FloatLayout:
+            MDIconButton:
+                icon:'arrow-left'
+                pos_hint:{'center_x':.08, "center_y":.95}
+                on_release:
+                    app.screen_leave()
+            MDLabel:
+                halign:'center'
+                pos_hint:{'center_x':.23, "center_y":.95}
+                text:'Help'
+                font_name: "images/fonts/Gill Sans Bold.otf"
+                size_hint:None, None
+            MDLabel:
+                halign:'center'
+                pos_hint:{'center_x':.5, "center_y":.8}
+                text:'Contacts'
+                font_size: "18sp"
+                font_name: "images/fonts/Gill Sans Bold.otf"
+                font_style:"H5"
+                bold:True
+                size_hint:None, None
+            MDLabel:
+                halign:'center'
+                pos_hint:{'center_x':.5, "center_y":.7}
+                text:'if you have not receive your order please contact us here!'
+                font_size: "30sp"
+                font_style:"Body2"
+                font_name: "images/fonts/Gill Sans Bold.otf"
+                bold:True
+            MDIcon:
+                halign:"center"
+                icon:'phone-outline'
+                pos_hint:{'center_x':.3, "center_y":.6}
+            MDLabel:
+                halign:'center'
+                pos_hint:{'center_x':.45, "center_y":.6}
+                text:'0715700411'
+                font_size: "30sp"
+                font_style:"Body2"
+                font_name: "images/fonts/Gill Sans Bold.otf"
+                bold:True
 
     MDScreen:
         name:'register'

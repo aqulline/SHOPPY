@@ -1,6 +1,7 @@
 import os
 import re
 import threading
+from os.path import join
 
 from kivy.clock import Clock
 
@@ -22,6 +23,7 @@ from kivymd.uix.dialog import MDDialog
 from kivymd.uix.label import MDLabel
 from kivymd.uix.textfield import MDTextField
 
+from db_transf import Transfer as TR
 from db_fetch import Fetch as FE
 
 Window.keyboard_anim_args = {"d": .2, "t": "linear"}
@@ -212,7 +214,7 @@ class MainApp(MDApp):
 
     def increment(self, what):
         if what == "minus":
-            if int(self.quantity) >= 1:
+            if int(self.quantity) >= 2:
                 self.quantity = str(int(self.quantity) - 1)
         elif what == "plus":
             if self.quantity < self.product_stock:
@@ -275,7 +277,7 @@ class MainApp(MDApp):
             self.screen_capture(self.current)
             return True
         elif key == 27 and self.screens_size == 0:
-            toast('fucker')
+            toast('Press Home button!')
             return True
 
     def screen_capture(self, screen):
@@ -357,6 +359,7 @@ class MainApp(MDApp):
                 other_number:
                 products::
         """
+        button1 = self.root.ids.follow
         self.company_details = FE.company_stiller(FE(), instance)
         self.company_name = self.company_details['customer_name']
         self.company_logo = self.company_details['logo']
@@ -365,6 +368,19 @@ class MainApp(MDApp):
             'following']
         self.company_phone = self.company_details['customer_phone']
         self.company_product(instance)
+        try:
+            if self.user_phone in self.company_details['loyalties']:
+                button1.md_bg_color = 1, 1, 1, 1
+                button1.text_color = 78 / 255, 82 / 255, 84 / 255, 1
+                button1.text = 'devoted'
+                button1.disabled = True
+            else:
+                pass
+        except:
+            button1.md_bg_color = 78 / 255, 82 / 255, 84 / 255, 1
+            button1.text_color = 1, 1, 1, 1
+            button1.text = 'loyal'
+            button1.disabled = False
 
     def clear_products(self):
         parent = self.root.ids.front_shop
@@ -434,6 +450,18 @@ class MainApp(MDApp):
                 card.id = x
                 scroll.add_widget(card)
             self.spin_dismiss()
+
+    def loyal_helper(self):
+        self.company_followers = TR.add_loyal(TR(), self.company_phone, self.user_phone, self.user_name)
+
+    def loyalty(self):
+        button1 = self.root.ids.follow
+        button1.md_bg_color = 1, 1, 1, 1
+        button1.text_color = 78 / 255, 82 / 255, 84 / 255, 1
+        button1.text = 'devoted'
+        button1.disabled = True
+        thr = threading.Thread(target=self.loyal_helper)
+        thr.start()
 
     ''''
                         UP HERE STAYS ONLY Product Association FUNCTIONS
@@ -611,7 +639,7 @@ class MainApp(MDApp):
         phone = self.user_phone
         self.amount = str(int(quantity) * int(self.product_price))
         self.send_sms(phone, location, self.company_phone, product_name, quantity)
-        TF.Order(TF(), company, phone, location, quantity, self.amount, product_name)
+        TF.Order(TF(), company, phone, location, quantity, self.amount, product_name, self.category, self.product_id)
         toast("Ordered successfully!")
 
     """
@@ -694,7 +722,7 @@ class MainApp(MDApp):
     ''''
                     UP HERE STAYS ONLY TESTING FUNCTIONS
 
-        '''
+    '''
 
     def build(self):
         self.theme_cls.theme_style = "Light"
