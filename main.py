@@ -113,6 +113,8 @@ class MainApp(MDApp):
     product_description = StringProperty('')
     product_image = StringProperty('')
     product_images = []
+    total_images = StringProperty('')
+    image_counter = StringProperty('1')
 
     # for food
     food_product = []
@@ -185,6 +187,7 @@ class MainApp(MDApp):
 
         spine = self.root.ids.spine
         spine.color = 78 / 255, 82 / 255, 84 / 255, 1
+
 
     def spin_dialog(self):
         if not self.dialog_spin:
@@ -328,8 +331,16 @@ class MainApp(MDApp):
         slider = self.root.ids.image_slide
         slider.clear_widgets()
         self.product_images = FE.image_stiller(FE(), id, cate)
+        self.total_images = str(self.product_images.__len__())
         for i in self.product_images:
             slider.add_widget(AsyncImage(source=i))
+
+    def counter_image(self):
+        cr = self.root.ids.image_slide
+        self.image_counter = str(1 + int(self.image_counter))
+        sa = cr.slides
+        se = cr.index
+        print(sa, se)
 
     def desc(self, instance):
         product = instance.id

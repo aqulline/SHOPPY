@@ -36,19 +36,21 @@ ScreenManager:
                 text_color: 1, 1, 1, 1
 
     MDScreen:
-        md_bg_color: 245/255, 245/255, 245/255, 1
+        md_bg_color: 239/255, 239/255, 239/255, 1
         name:"entrance"
         FloatLayout:
             Shops:
                 pos_hint:{'center_x': .25, 'center_y':.65}
+                elevation:'15'
                 on_release:
                     app.category = "Food"
                     app.food_counter = 0
                     app.clear_products()
                     app.screen_capture('food')
                 MDIcon:
-                    icon:"food"
+                    icon:"food-fork-drink"
                     halign:"center"
+                    font_size: "60sp"
                     pos_hint:{'center_x':.5, 'center_y': .6}
                     theme_text_color: "Custom"
                     text_color: 83/225, 186/225, 115/225, 1
@@ -62,19 +64,21 @@ ScreenManager:
                     halign:'center'
             Shops:
                 pos_hint:{'center_x': .75, 'center_y':.65}
+                elevation:'15'
                 on_release:
                     app.category = "Market"
                     app.food_counter = 0
                     app.clear_products()
                     app.screen_capture('food')
                 MDIcon:
-                    icon:"shopping"
+                    icon:"shopping-outline"
                     halign:"center"
+                    font_size: "60sp"
                     pos_hint:{'center_x':.5, 'center_y': .6}
                     theme_text_color: "Custom"
                     text_color: 83/225, 186/225, 115/225, 1
                 MDLabel:
-                    text:"MARKETS"
+                    text:"MARKET'S"
                     bold:True
                     halign:'center'
                     font_name:'images/fonts/Gill Sans Bold.otf'
@@ -87,11 +91,13 @@ ScreenManager:
                 size_hint: None, None
                 size: app.size_x/2, app.size_y/8.5
                 orientation:'vertical'
+                elevation:'15'
                 on_release:
                     app.screen_capture('request')
                 MDIcon:
                     icon:"information-variant"
                     halign:"center"
+                    font_size: "60sp"
                     pos_hint:{'center_x':.5, 'center_y': .6}
                     theme_text_color: "Custom"
                     text_color: 83/225, 186/225, 115/225, 1
@@ -350,7 +356,7 @@ ScreenManager:
                 size: app.size_x-25, app.size_y/4.5
                 Image:
                     height:self.texture_size[1]
-                    source:'images/icons/iconshoppy.png'
+                    source:'images/shoppy.jpg'
             MDLabel:
                 text:"Hello" + " " + app.user_name
                 pos_hint:{'center_x':.5, 'center_y':.9}
@@ -445,14 +451,15 @@ ScreenManager:
                 border_color_a: 0
                 radius: [15]
                 size_hint: None, None
-                size: app.size_x/1, app.size_y/9
+                size: app.size_x/1, app.size_y/11
                 pos_hint:{'center_x':.5, 'center_y':.85}
                 focus_behavior: False
                 ripple_behavior: False
-                elevation: 0.1
+                elevation: 2
                 MDIconButton:
                     icon:'chevron-left'
                     theme_text_color: "Custom"
+                    size_hint:None, None
                     text_color: 83 / 255, 186 / 255, 155 / 255, 1
                     on_press:
                         app.screen_leave()
@@ -461,7 +468,9 @@ ScreenManager:
                     halign:'center'
                     bold:True
                     markup:True
-                    font_name:'images/fonts/Gill Sans.otf'
+                    font_style:"H5"
+                    underline: True
+                    font_name:'images/fonts/Gill Sans Bold.otf'
                     theme_text_color: "Custom"
                     text_color: 78/255, 82/255, 84/255, 1
                     on_ref_press:
@@ -469,6 +478,16 @@ ScreenManager:
                     #font_style:"Subtitle1"
             MDCarousel:
                 id:image_slide
+                min_move: .1
+                on_slide_complete:
+                    app.image_counter = str(int(self.index) + 1)
+            Labels:
+                text:app.image_counter + '/' + app.total_images
+                font_style:"Body1"
+                halign:'center'
+                font_name:'images/fonts/Gill Sans Bold.otf'
+                theme_text_color: "Custom"
+                #text_color: 83 / 255, 186 / 255, 155 / 255, 1
             ScrollView:
                 id: scroll
                 MDBoxLayout:
@@ -477,18 +496,18 @@ ScreenManager:
                     padding: dp(10), dp(4)
                     spacing: dp(30)
                     Labels:
-                        text:app.t_price_comma + 'Tsh'
-                        font_style:"Subtitle1"
-                        halign:'center'
-                        font_name:'images/fonts/Gill Sans.otf'
-                        theme_text_color: "Custom"
-                        #text_color: 83 / 255, 186 / 255, 155 / 255, 1
-                    Labels:
                         text:app.product_name
                         font_style:"H6"
                         font_name:'images/fonts/Gill Sans.otf'
                         theme_text_color: "Custom"
                         text_color: 83 / 255, 186 / 255, 155 / 255, 1
+                    Labels:
+                        text:'Price:'+app.t_price_comma + '/=Tsh'
+                        font_style:"Subtitle1"
+                        #halign:'center'
+                        font_name:'images/fonts/Gill Sans.otf'
+                        theme_text_color: "Custom"
+                        #text_color: 83 / 255, 186 / 255, 155 / 255, 1
                     MDLabel:
                         text:'DESCRIPTION'
                         height: self.texture_size[1]
@@ -594,7 +613,6 @@ ScreenManager:
                 halign:'center'
                 pos_hint:{'center_x':.23, "center_y":.95}
                 text:'About'
-                size_hint:None, None
             MDLabel:
                 halign:'center'
                 pos_hint:{'center_x':.5, "center_y":.8}
@@ -603,7 +621,6 @@ ScreenManager:
                 font_style:"H5"
                 bold:True
                 font_name: "images/fonts/Gill Sans Bold.otf"
-                size_hint:None, None
             MDIcon:
                 icon:"instagram"
                 font_size: "30sp"
@@ -617,7 +634,6 @@ ScreenManager:
                 font_name: "images/fonts/Gill Sans.otf"
                 font_style:"Body2"
                 bold:True
-                size_hint:None, None
             MDIcon:
                 icon:"whatsapp"
                 font_size: "30sp"
@@ -631,7 +647,6 @@ ScreenManager:
                 font_style:"Body2"
                 font_name: "images/fonts/Gill Sans.otf"
                 bold:True
-                size_hint:None, None
 
     MDScreen:
         name:'help'
@@ -646,7 +661,6 @@ ScreenManager:
                 pos_hint:{'center_x':.23, "center_y":.95}
                 text:'Help'
                 font_name: "images/fonts/Gill Sans Bold.otf"
-                size_hint:None, None
             MDLabel:
                 halign:'center'
                 pos_hint:{'center_x':.5, "center_y":.8}
@@ -655,7 +669,6 @@ ScreenManager:
                 font_name: "images/fonts/Gill Sans Bold.otf"
                 font_style:"H5"
                 bold:True
-                size_hint:None, None
             MDLabel:
                 halign:'center'
                 pos_hint:{'center_x':.5, "center_y":.7}
@@ -688,6 +701,16 @@ ScreenManager:
                 pos_hint:{'center_x':.5, 'center_y':.85}
                 theme_text_color: "Custom"
                 text_color: 83 / 225, 186 / 225, 115 / 225, 1
+                font_name:'images/fonts/Gill Sans.otf'
+                height: self.texture_size[1]
+                width: self.texture_size[1]
+            MDLabel:
+                text:'enter the same info to login if already registered!'
+                halign:"center"
+                font_style:'Caption'
+                pos_hint:{'center_x':.5, 'center_y':.8}
+                theme_text_color: "Custom"
+                text_color: 78 / 255, 82 / 255, 84 / 255, 1
                 font_name:'images/fonts/Gill Sans.otf'
                 height: self.texture_size[1]
                 width: self.texture_size[1]
