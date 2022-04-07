@@ -38,7 +38,7 @@ class Transfer:
                             'phone': phone,
                             'course': 'None',
                             'date': self.date,
-                            'bio': 'Change Bio in Setting!',
+                            'bio': 'more you buy more buying points',
                             'logo': Fe.Logos(Fe(), username),
                             'following': '0',
                             'birth-date': 'None',

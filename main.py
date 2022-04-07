@@ -519,7 +519,9 @@ class MainApp(MDApp):
         elif name == "":
             toast("please enter your name")
         else:
-            self.register_caller(phone, name)
+            toast("Please wait!")
+            Clock.schedule_once(lambda x: self.register_caller(phone, name), 1)
+
 
     def call_look(self):
         self.spin_dialog()
@@ -572,6 +574,14 @@ class MainApp(MDApp):
             self.user_counter = self.user_counter + 1
             self.spin_dialog()
             Clock.schedule_once(lambda x: self.user_profile(), 5)
+
+    def clear_user(self):
+        with open("credential/admin.txt", 'r+') as f:
+            f.truncate(0)
+            f.close()
+        with open("credential/admin_info.txt", "r+") as d:
+            d.truncate(0)
+            d.close()
 
     def user_profile(self):
         """

@@ -3,6 +3,7 @@ ScreenManager:
     id:manager
     transition:sm.FadeTransition(duration=.0)
     MDScreen:
+        name:"genesis"
         radius: [25, 25, 25, 25]
         md_bg_color:83 / 225, 186 / 225, 115 / 225, 1
         MDBoxLayout:
@@ -350,17 +351,19 @@ ScreenManager:
         name:'request'
         MDBoxLayout:
             orientation:"vertical"
-            spacing: dp(-5)
+            spacing: dp(15)
             Shops:
                 pos_hint:{"center_x": .5, "center_y":.87}
                 size: app.size_x-25, app.size_y/4.5
                 Image:
-                    height:self.texture_size[1]
+                    height: self.texture_size[1]
+                    width: self.texture_size[1]
                     source:'images/shoppy.jpg'
             MDLabel:
                 text:"Hello" + " " + app.user_name
-                pos_hint:{'center_x':.5, 'center_y':.9}
+                pos_hint:{'center_x':.5, 'center_y':.75}
                 height: self.texture_size[1]
+                width: self.texture_size[1]
                 halign:'center'
                 font_style:'H6'
                 bold:True
@@ -371,6 +374,7 @@ ScreenManager:
                 text:"Welcome to SHOPPY"
                 pos_hint:{'center_x':.5, 'center_y':.7}
                 height: self.texture_size[1]
+                width: self.texture_size[1]
                 halign:'center'
                 font_style:'Subtitle1'
                 bold:True
@@ -378,9 +382,10 @@ ScreenManager:
                 theme_text_color: "Custom"
                 text_color: 78/255, 82/255, 84/255, 1
             MDLabel:
-                text:"Hapa ndio itakuwa sehemu ambayo utakuwa unapata habari, taarifa na matangazo mbalili kuhusu app hii"
+                text:"Hapa ndio sehemu ambayo utapata habari, taarifa na matangazo mbalimbali kuhusu app hii"
                 pos_hint:{'center_x':.5, 'center_y':.65}
                 height: self.texture_size[1]
+                width: self.texture_size[1]
                 halign:'center'
                 font_style:'Body1'
                 bold:True
@@ -389,50 +394,97 @@ ScreenManager:
                 text_color: 78/255, 82/255, 84/255, 1
             MDLabel:
                 text:"UZA NASI"
-                pos_hint:{'center_x':.13, 'center_y':.6}
+                #pos_hint:{'center_x':.13, 'center_y':.6}
                 height: self.texture_size[1]
+                width: self.texture_size[1]
                 halign:'center'
-                font_style:'Subtitle1'
+                font_style:'Body1'
                 bold:True
                 font_name:'images/fonts/Gill Sans Bold.otf'
                 theme_text_color: "Custom"
                 text_color: 78/255, 82/255, 84/255, 1
             MDLabel:
                 text:"1.Uwe na bidha yoyote"
-                pos_hint:{'center_x':.2, 'center_y':.55}
+                #pos_hint:{'center_x':.2, 'center_y':.55}
                 height: self.texture_size[1]
+                width: self.texture_size[1]
                 halign:'center'
-                font_style:'Subtitle1'
+                font_style:'Body1'
                 bold:True
                 font_name:'images/fonts/Gill Sans.otf'
                 theme_text_color: "Custom"
                 text_color: 78/255, 82/255, 84/255, 1
             MDLabel:
-                text:"2.Uwe na simu ya smartphone au simu ndogo"
-                pos_hint:{'center_x':.37, 'center_y':.5}
+                text:"2.Uwe mwanafunzi wa chuo"
+                #pos_hint:{'center_x':.37, 'center_y':.5}
                 height: self.texture_size[1]
+                width: self.texture_size[1]
                 halign:'center'
-                font_style:'Subtitle1'
+                font_style:'Body1'
                 bold:True
                 font_name:'images/fonts/Gill Sans.otf'
                 theme_text_color: "Custom"
                 text_color: 78/255, 82/255, 84/255, 1
             MDLabel:
-                text:"3.Uwe Mwanafunzi wa chuo."
-                pos_hint:{'center_x':.25, 'center_y':.45}
+                text:"3.Uwe na simu ya smartphone au simu ndogo"
+                #pos_hint:{'center_x':.25, 'center_y':.45}
                 height: self.texture_size[1]
+                width: self.texture_size[1]
                 halign:'center'
-                font_style:'Subtitle1'
+                font_style:'Body1'
                 bold:True
+                font_name:'images/fonts/Gill Sans.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
+            MDLabel:
+                text:"Mjue muuzaji"
+                #pos_hint:{'center_x':.5, 'center_y':.3}
+                height: self.texture_size[1]
+                width: self.texture_size[1]
+                halign:'center'
+                font_style:'Body1'
+                bold:True
+                font_name:'images/fonts/Gill Sans Bold.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
+            MDLabel:
+                text:"ukitaka kujua tarifa juu ya muuzaji unaweza kuingia kwenye wasifu wake \nkwa ku search jina lake au ukibonyeza jina lililopo juu kwenye maelezo ya bidhaa"
+                #pos_hint:{'center_x':.5, 'center_y':.3}
+                height: self.texture_size[1]
+                width: self.texture_size[1]
+                halign:'center'
+                font_style:'Body1'
+                font_name:'images/fonts/Gill Sans.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
+            MDLabel:
+                text:"Kuhusu Buying points"
+                #pos_hint:{'center_x':.5, 'center_y':.3}
+                height: self.texture_size[1]
+                width: self.texture_size[1]
+                halign:'center'
+                font_style:'Body1'
+                bold:True
+                font_name:'images/fonts/Gill Sans Bold.otf'
+                theme_text_color: "Custom"
+                text_color: 78/255, 82/255, 84/255, 1
+            MDLabel:
+                text:"Kila unapo nunua bidhaa unapata point kulingana na bei ya bidhaa, point izo utaweza kuzitumia kuanzia point 1000"
+                #pos_hint:{'center_x':.5, 'center_y':.3}
+                height: self.texture_size[1]
+                width: self.texture_size[1]
+                halign:'center'
+                font_style:'Body1'
                 font_name:'images/fonts/Gill Sans.otf'
                 theme_text_color: "Custom"
                 text_color: 78/255, 82/255, 84/255, 1
             MDLabel:
                 text:"Phone:0715700411"
-                pos_hint:{'center_x':.5, 'center_y':.3}
+                #pos_hint:{'center_x':.5, 'center_y':.3}
                 height: self.texture_size[1]
+                width: self.texture_size[1]
                 halign:'center'
-                font_style:'Body2'
+                font_style:'Body1'
                 bold:True
                 font_name:'images/fonts/Gill Sans Bold.otf'
                 theme_text_color: "Custom"
@@ -446,7 +498,7 @@ ScreenManager:
             MDCard:
                 md_bg_color: 1, 1, 1, 1
                 padding: "10dp"
-                #spacing: "5dp"
+                spacing: "-5dp"
                 border_radius: 20
                 border_color_a: 0
                 radius: [15]
@@ -463,16 +515,20 @@ ScreenManager:
                     text_color: 83 / 255, 186 / 255, 155 / 255, 1
                     on_press:
                         app.screen_leave()
-                MDLabel:
+                Labels:
                     text:f"[ref=hello]" + app.company_name + "[/ref]"
                     halign:'center'
+                    pos_hint:{"center_x":.5, "center_y":.5}
                     bold:True
+                    pos_hint_x:.3
                     markup:True
                     font_style:"H5"
+                    height: self.texture_size[1]
+                    width: self.texture_size[1]
                     underline: True
-                    font_name:'images/fonts/Gill Sans Bold.otf'
+                    #font_name:'images/fonts/Gill Sans Bold.otf'
                     theme_text_color: "Custom"
-                    text_color: 78/255, 82/255, 84/255, 1
+                    #text_color: 83 / 255, 186 / 255, 155 / 255, 1
                     on_ref_press:
                         app.company_screen(app.company_phone)
                     #font_style:"Subtitle1"
@@ -600,6 +656,17 @@ ScreenManager:
                     app.screen_capture("help")
                 IconLeftWidget:
                     icon: "parachute-outline"
+            TwoLineIconListItem:
+                text: "Logout"
+                secondary_text: "click to logout"
+                pos_hint:{'center_x':.5, "center_y":.72}
+                on_release:
+                    app.clear_user()
+                    app.screens.clear()
+                    manager.current="genesis"
+                    app.on_start()
+                IconLeftWidget:
+                    icon: "logout"
 
     MDScreen:
         name:'about'

@@ -29,7 +29,7 @@ source.include_exts = py, png, jpg, kv, atlas, json, jpeg, txt, ttf, otf
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.12
+version = 1.1
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
@@ -284,7 +284,7 @@ android.allow_backup = True
 # android.no-compile-pyo = True
 
 # (str) The format used to package the app for release mode (aab or apk).
-android.release_artifact = apk
+android.release_artifact = aab
 
 #
 # Python for android (p4a) specific
