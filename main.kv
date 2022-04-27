@@ -765,7 +765,7 @@ ScreenManager:
                 text:'Register Once!'
                 halign:"center"
                 font_style:'H4'
-                pos_hint:{'center_x':.5, 'center_y':.85}
+                pos_hint:{'center_x':.5, 'center_y':.9}
                 theme_text_color: "Custom"
                 text_color: 83 / 225, 186 / 225, 115 / 225, 1
                 font_name:'images/fonts/Gill Sans.otf'
@@ -775,7 +775,17 @@ ScreenManager:
                 text:'enter the same info to login if already registered!'
                 halign:"center"
                 font_style:'Caption'
-                pos_hint:{'center_x':.5, 'center_y':.8}
+                pos_hint:{'center_x':.5, 'center_y':.86}
+                theme_text_color: "Custom"
+                text_color: 78 / 255, 82 / 255, 84 / 255, 1
+                font_name:'images/fonts/Gill Sans.otf'
+                height: self.texture_size[1]
+                width: self.texture_size[1]
+            MDLabel:
+                text:'Verification will be needed, enter correct number'
+                halign:"center"
+                font_style:'Body2'
+                pos_hint:{'center_x':.5, 'center_y':.82}
                 theme_text_color: "Custom"
                 text_color: 78 / 255, 82 / 255, 84 / 255, 1
                 font_name:'images/fonts/Gill Sans.otf'
@@ -801,7 +811,7 @@ ScreenManager:
                 font_size: dp(25)
             MDRaisedButton:
                 id:b_register
-                text: "Register"
+                text: "Verify & Register"
                 size_hint: .8, .06
                 pos_hint:{'center_x':.5, 'center_y':.35}
                 md_bg_color: 83 / 225, 186 / 225, 115 / 225, 1
@@ -945,6 +955,15 @@ ScreenManager:
         md_bg_color: 83 / 225, 186 / 225, 115 / 225, 1
         on_release:
             app.order_caller()
+
+<phone_code>:
+    NumberOnlyField:
+        id:phone
+        hint_text:"Code:"
+        size_hint: .8, None
+        pos_hint_x: .2
+        on_text:
+            app.user_pin = phone.text
 
 <CustomOneLineIconListItem>:
 

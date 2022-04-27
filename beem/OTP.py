@@ -16,10 +16,11 @@ class req:
         secrete_key = "ZGVmNWVkMzYxZmRhNWQ3MjM3NDhkMThmMWFkYzg4ZTM0ZGUwMjZmMGZjYTkzNWNkODRkMzFiMWJkZmM0M2JmYw=="
         api_key = '8ccab9418dedde47'
         Authorize(api_key, secrete_key)
-        req.phone = phone
+        req.phone = self.phone_repr(phone)
+        print(phone)
         first_request = requests.post(url=URL, data=json.dumps({
             "appId": 181,
-            "msisdn": phone
+            "msisdn": self.phone_repr(phone)
         }),
 
                                       headers={
@@ -50,3 +51,16 @@ class req:
             return True
         else:
             return False
+
+
+    def phone_repr(self, phone):
+        new_number = ""
+        if phone != "":
+            for i in range(phone.__len__()):
+                if i == 0:
+                    pass
+                else:
+                    new_number = new_number + phone[i]
+            number = "255" + new_number
+            public_number = number
+            return public_number

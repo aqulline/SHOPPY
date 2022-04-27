@@ -13,6 +13,7 @@ from kivymd.toast import toast
 from kivymd.uix.bottomsheet import MDListBottomSheet
 from kivy.base import EventLoop
 from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.button import MDFlatButton, MDRaisedButton
 from kivymd.uix.card import MDCard
 from kivy import utils
 import phonenumbers
@@ -78,6 +79,10 @@ class NumberOnlyField(MDTextField):
         return super(NumberOnlyField, self).insert_text(s, from_undo=from_undo)
 
 
+class phone_code(MDDialog):
+    pass
+
+
 class MainApp(MDApp):
     # APP
     size_x = NumericProperty(0)
@@ -90,6 +95,7 @@ class MainApp(MDApp):
     dialog_spin = None
     alert_dialog = None
     order_dialog = None
+    dialog_v_phone = None
 
     # business
     quantity = StringProperty('1')
@@ -127,15 +133,9 @@ class MainApp(MDApp):
     t_company_products = []
     t_company_product = []
     company_instances = []
-    t_product_name = StringProperty('')
-    t_product_price = StringProperty('')
-    t_Product_title = StringProperty('')
-    t_product_stock = StringProperty('')
-    t_product_id = StringProperty('')
-    t_product_description = StringProperty('')
-    t_product_image = StringProperty('')
+    t_phone = StringProperty("")
+    t_name = StringProperty("")
     t_price_comma = StringProperty('')
-    user_date = StringProperty('22.6.2002')
 
     # ONCE counter's
     food_counter = NumericProperty(0)
@@ -155,6 +155,7 @@ class MainApp(MDApp):
     user_logo = StringProperty('')
     user_login = NumericProperty(0)
     user_course = StringProperty('')
+    user_pin = StringProperty('')
 
     def on_start(self):
         self.backgrounds_colors()
@@ -188,7 +189,6 @@ class MainApp(MDApp):
         spine = self.root.ids.spine
         spine.color = 78 / 255, 82 / 255, 84 / 255, 1
 
-
     def spin_dialog(self):
         if not self.dialog_spin:
             self.dialog_spin = MDDialog(
@@ -212,8 +212,28 @@ class MainApp(MDApp):
     def alert_dismiss(self):
         self.alert_dialog.dismiss()
 
+    def phone_verfy_dialog(self):
+        if not self.dialog_v_phone:
+            self.dialog_v_phone = phone_code(
+                title="verification code sent to you",
+                auto_dismiss=False,
+                buttons=[
+                    MDFlatButton(
+                        text="Cancel", text_color=self.theme_cls.primary_color, on_release=self.kill_v_phone
+                    ),
+                    MDRaisedButton(
+                        text="Submit",
+                        on_release=lambda x: self.verify(self.user_pin)
+                    ),
+                ],
+            )
+        self.dialog_v_phone.open()
+
     def spin_dismiss(self):
         self.dialog_spin.dismiss()
+
+    def kill_v_phone(self, *kwargs):
+        self.dialog_v_phone.dismiss()
 
     def increment(self, what):
         if what == "minus":
@@ -485,7 +505,7 @@ class MainApp(MDApp):
 
     def phone_number_check_admin(self, phone):
         new_number = ""
-        if phone != "":
+        if phone != "" and len(phone) == 10:
             for i in range(phone.__len__()):
                 if i == 0:
                     pass
@@ -519,9 +539,9 @@ class MainApp(MDApp):
         elif name == "":
             toast("please enter your name")
         else:
-            toast("Please wait!")
-            Clock.schedule_once(lambda x: self.register_caller(phone, name), 1)
-
+            self.t_phone = phone
+            self.t_name = name
+            self.phone_verify(phone)
 
     def call_look(self):
         self.spin_dialog()
@@ -610,6 +630,20 @@ class MainApp(MDApp):
 
     def buying_point(self):
         toast('If you reach 1000/bp contact us!')
+
+    def phone_verify(self, phone):
+        from beem import OTP as tp
+        toast('wait a moment')
+        if tp.req.otp_req(tp.req(), phone):
+            self.phone_verfy_dialog()
+
+    def verify(self, pin):
+        from beem import OTP as tp
+        self.kill_v_phone()
+        if tp.req.verfy(tp.req(), pin):
+            Clock.schedule_once(lambda x: self.register_caller(self.t_phone, self.t_name), 1)
+        else:
+            toast("Try again")
 
     """
      
